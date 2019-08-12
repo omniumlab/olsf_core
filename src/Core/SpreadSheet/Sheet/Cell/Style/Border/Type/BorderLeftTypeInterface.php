@@ -1,0 +1,10 @@
+<?php
+
+
+namespace Core\SpreadSheet\Sheet\Cell\Style\Border\Type;
+
+
+interface BorderLeftTypeInterface extends BorderTypeInterface
+{
+
+}

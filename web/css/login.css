@@ -1,0 +1,204 @@
+.login {
+    background: white !important;
+    background-size: 50% !important;
+}
+
+body.login {
+    overflow: auto;
+    position: relative;
+}
+
+
+.login_content > form > h1 {
+    letter-spacing: 4px;
+    line-height: 35px;
+    text-transform: uppercase;
+    margin-bottom: 51px !important;
+    color: white;
+}
+
+.login_wrapper {
+    margin-top: 0 !important;
+}
+
+.login_content {
+    background-color: rgba(77, 77, 77, 0.72) !important;
+    border-radius: 52px 0 0 0;
+    padding: 35px 50px !important;
+    position: fixed !important;
+    bottom: 66px;
+    left: 0;
+    right: 0;
+    max-width: 24%;
+}
+
+.login_content form {
+    min-height: 295px;
+}
+
+.login_content h1:before, .login_content h1:after {
+    width: 0 !important;
+}
+
+#img_logo_transparency {
+    width: 46%;
+    height: auto;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    object-fit: cover;
+    margin: auto;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+#img_logo {
+    width: 391px;
+    height: auto;
+    bottom: 517px;
+    position: absolute !important;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    min-width: 83px;
+    z-index: -1;
+}
+
+.login_content .form-control{
+    background: transparent !important;
+    border-width: 3px !important;
+    border-color: white !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    min-height: 39px !important;
+}
+
+.login_content .form-control:focus {
+    border: none !important;
+    background: rgba(77, 77, 77, 0.72) !important;
+    width: 98% !important;
+    height: 34px;
+    min-height: 10px !important;
+    position: relative;
+    display: inline-block;
+    margin: 3px 0 !important;
+}
+
+.focused {
+    border: 0 !important;
+    background-image: linear-gradient(to left, #ff5500 0%, #ff5500 100%) !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    position: relative !important;
+    z-index: 2 !important;
+    margin-bottom: 19px !important;
+}
+
+.login_content .separator {
+    border-top: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative;
+    bottom: 12px !important;
+}
+
+.login_content div .reset_pass {
+    margin-top: 0 !important;
+    margin-right: 15px !important;
+    color: white;
+    font-size: 15px;
+}
+
+#remember_me_div {
+    position: absolute;
+    bottom: 48px;
+    z-index: 2;
+}
+
+#remember_me_div > label {
+    font-family: FuturaStd-Book, sans-serif !important;
+    font-weight: normal !important;
+    color: white !important;
+}
+
+.submit_div {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.submit_div button, .submit_div a {
+    font-family: conthrax-sb, sans-serif !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    background: #39B54A !important;
+    color: white;
+    border-radius: 20px;
+    min-height: 38px !important;
+    min-width: 125px !important;
+}
+
+.submit_div button:hover, .submit_div a:hover {
+    color: #4d4d4d !important;
+}
+
+.submit_div a {
+    padding-top: 10px;
+}
+
+.login input {
+    color: white !important;
+}
+
+.login_content input::placeholder {
+    color: #c3c1c1;
+}
+
+@media screen and (max-height: 706px) {
+    body.login {
+        overflow: auto;
+    }
+
+    .login_content {
+        position: relative !important;
+        padding: 20px 50px !important;
+        bottom: 27px;
+    }
+
+    .login_wrapper{
+        padding-top: 195px !important;
+    }
+
+    #img_logo {
+        width: 100px;
+        content: url("../images/panel/logo.png");
+        position: absolute !important;
+        display: block;
+        bottom: auto;
+        top: 35px;
+    }
+
+    .login_form {
+        position: relative !important;
+    }
+
+
+}
+
+@media screen and (max-width: 1440px) {
+    .submit_div {
+        bottom: -25px;
+        right: 0;
+        left: 0;
+    }
+
+    .login_content > form > h1 {
+        margin-bottom: 26px !important;
+    }
+
+    #remember_me_div {
+        bottom: 28px;
+    }
+
+}

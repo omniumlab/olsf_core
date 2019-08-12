@@ -1,0 +1,185 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: true
+
+    Core\Reflection\Finders\:
+        resource: '../../../src/Core/Reflection/Finders/*'
+
+    Core\Reflection\Builders\:
+        resource: '../../../src/Core/Reflection/Builders/*'
+
+    Core\Text\:
+        resource: '../../../src/Core/Text/*'
+
+    Core\Commands\RequestCommandInterface:
+        class: Core\Commands\Symfony\RequestBaseCommand
+
+    Core\Commands\QueryCommandInterface:
+        class: Core\Commands\Symfony\QueryBaseCommand
+
+    Core\Commands\RequestHeadersInterface:
+        class: Core\Commands\Symfony\RequestHeaders
+
+    Core\Auth\AuthServiceInterface:
+        class: Core\Auth\AuthService
+
+    Core\Bus\:
+        resource: '../../../src/Core/Bus/*'
+
+    Core\Auth\Session\SessionServiceInterface:
+        class: Core\Auth\Session\StatelessSessionService
+
+    Core\Auth\HandlerAccessCheckerInterface:
+        class: Core\Auth\HandlerAccessChecker
+
+    Core\Auth\Permissions\PermissionsFinderInterface:
+        class: Core\Auth\Permissions\PermissionsFinder
+
+    Core\Templating\:
+        resource: '../../../src/Core/Templating/*'
+
+    Core\Entities\Options\ColumnTypeFormatter\:
+        resource: '../../../src/Core/Entities/Options/ColumnTypeFormatter/*'
+
+    Core\Controllers\Symfony\:
+        resource: '../../../src/Core/Controllers/Symfony/*'
+
+    Core\Symfony\Yaml\:
+        resource: '../../../src/Core/Symfony/Yaml'
+
+    App\:
+        resource: '../../../src/App/*/{Handlers,Entities,Commands,Bus}/'
+        exclude: '../../../src/App/*/Handlers/Responses/*'
+
+    Core\Config\:
+        resource: '../../../src/Core/Config'
+
+    Core\Config\GlobalConfigInterface:
+        class: Core\Config\SymfonyGlobalConfig
+
+    Core\Auth\Login\Config\LoginConfigInterface:
+        class: Core\Config\SymfonyGlobalConfig
+
+    Core\Auth\Login\LoginAttempt\BadLoginAttemptInterface:
+        class: Core\Auth\Login\LoginAttempt\BadLoginAttempt
+
+    Core\Auth\Login\LoginServiceInterface:
+        class: Core\Auth\Login\StatelessLoginService
+
+    Core\Handlers\ConfigHandler\MenuInterface:
+        class: Core\Handlers\ConfigHandler\Menu
+
+    Core\Mailer\MailerServiceInterface:
+        class: Core\Mailer\SwiftMailer\MailerService
+
+    Core\Symfony\Commands\ModelBuildCommand:
+        tags:
+            - { name: 'propel.model.build', command: 'propel:model:build' }
+    Core\Symfony\Commands\SqlBuildCommand:
+        tags:
+            - { name: 'propel.sql.build', command: 'propel:sql:build' }
+
+    Core\Language\Repository\LanguageRepositoryInterface:
+        class: Core\Language\Repository\LanguageRepository
+
+    Core\Language\Factory\LanguageFactoryInterface:
+        class: Core\Language\Factory\LanguageFactory
+
+    Core\Symfony\RootDirObtainerInterface:
+      class: Core\Symfony\RootDirObtainer
+
+    Core\Repository\Image\ImageRepositoryInterface:
+      class: Core\Repository\Image\ImageRepository
+
+    Core\Repository\Pdf\PdfRepositoryInterface:
+      class: Core\Repository\Pdf\PdfRepository
+
+    Core\Services\NotificationPush\PushSenderInterface:
+      class: Core\Services\NotificationPush\NativePushSender
+
+    Core\Log\Repository\LogRepositoryInterface:
+      class: Core\Log\Repository\DatabaseLogRepository
+
+    Core\Pdf\PdfGeneratorInterface:
+      class: Core\Pdf\SymfonyPdfGenerator
+
+    Core\Repository\Translation\TranslationRepositoryInterface:
+      class: Core\Repository\Translation\SymfonyTranslationRepository
+
+    Core\Encryptor\EncryptorInterface:
+      class: Core\Encryptor\Encryptor
+
+    Core\Services\StripePayment\StripeInterface:
+      class: Core\Services\StripePayment\StripePaymentMethod
+
+    Core\Services\PaypalPayment\PaypalInterface:
+      class: Core\Services\PaypalPayment\PaypalPaymentMethod
+
+    Core\Services\BBVAPayment\BBVAInterface:
+      class: Core\Services\BBVAPayment\BBVAPaymentMethod
+
+    Core\Repository\File\FileRepositoryInterface:
+      class: Core\Repository\File\FileRepository
+
+    Core\Auth\Roles\AnonymousRole:
+        class: Core\Auth\Roles\AnonymousRole
+
+    Core\SpreadSheet\Factory\SpreadSheetFactoryInterface:
+        class: Core\SpreadSheet\Factory\SpreadSheetFactory
+
+    Core\SpreadSheet\Sheet\Factory\SheetFactoryInterface:
+        class: Core\SpreadSheet\Sheet\Factory\SheetFactory
+
+    Core\SpreadSheet\Repository\SpreadSheetRepositoryInterface:
+        class: Core\SpreadSheet\Repository\PhpSpreadSheet\PhpSpreadSheetRepository
+
+    Core\SpreadSheet\Sheet\Cell\Factory\CellFactoryInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Factory\CellFactory
+
+    Core\SpreadSheet\Sheet\Cell\Style\Alignment\Horizontal\HorizontalAlignmentInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Alignment\Horizontal\HorizontalAlignment
+
+    Core\SpreadSheet\Sheet\Cell\Style\Alignment\Vertical\VerticalAlignmentInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Alignment\Vertical\VerticalAlignment
+
+    Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderAllTypeInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderAllType
+
+    Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderTopTypeInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderTopType
+
+    Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderLeftTypeInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderLeftType
+
+    Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderRightTypeInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderRightType
+
+    Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderBottomTypeInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Border\Type\BorderBottomType
+
+    Core\SpreadSheet\Sheet\Cell\Style\Fill\Type\FillTypeInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Fill\Type\FillType
+
+    Core\SpreadSheet\Sheet\Cell\Style\Creator\StyleCreatorInterface:
+        class: Core\SpreadSheet\Sheet\Cell\Style\Creator\StyleCreator
+
+    Core\SpreadSheet\Sheet\Cell\Style\Format\FormatInterface:
+        class:  Core\SpreadSheet\Sheet\Cell\Style\Format\Format
+
+    # add more services, or override services that need manual wiring
+    # AppBundle\Service\ExampleService:
+    #     arguments:
+    #         $someArgument: 'some_value'
+

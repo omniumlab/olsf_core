@@ -1,0 +1,38 @@
+#entity_signing_event_date_list .top-filters  h2 {
+    display: none;
+}
+
+#entity_signing_event_date_list .ng-star-inserted > .clearfix:after {
+    clear: none !important;
+}
+
+#entity_signing_event_date_list .ng-star-inserted .summary {
+    max-width: 300px !important;
+    float: left !important;
+}
+
+#entity_signing_event_date_list .ng-star-inserted .top-filters {
+    float: left !important;
+}
+
+#entity_signing_event_date_list .top-filters > .tile-stats {
+    margin-left: 28px;
+    margin-top: 6px;
+}
+
+#entity_signing_event_date_list .ng-star-inserted .summary {
+    max-width: 300px !important;
+    position: absolute;
+    left: 479px;
+    top: 69px;
+}
+
+#entity_signing_event_date_list .ng-star-inserted .top-filters {
+    float: left !important;
+    margin-left: 0;
+}
+
+#entity_signing_event_date_list .top-filters > .tile-stats {
+    margin-left: 11px;
+    margin-top: 6px;
+}

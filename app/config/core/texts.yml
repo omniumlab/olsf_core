@@ -1,0 +1,12 @@
+parameters:
+  add_success_response: Añadido correctamente
+  update_success_response: Actualizado correctamente
+  recoverpass_success_response: Mensaje enviado
+  failure_recoverpass_response: Email no encontrado
+  success_delete_handler_response_text: Eliminado correctamente
+  success_permissions_handler_response_text: Permisos actualizados correctamente
+  failure_permissions_handler_response_text: Los permisos de Superadmin no pueden ser cambiados
+  failure_parent_field: You have to set 'parentField' before setting idParent.
+  list_translation_filter_tables: Selector de Tabla
+  list_translation_filter_column_name: Nombre
+  failed_login_attempts_exceeded_exception: Has introducido la contraseña incorrectamente demasiadas veces. Vuelve a intentarlo en 30 minutos.

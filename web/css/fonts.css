@@ -1,0 +1,34 @@
+@font-face {
+    font-family: "ADAM_CG_PRO";
+    src: url("../fonts/ADAM.CG_PRO.otf");
+}
+
+@font-face {
+    font-family: conthrax-sb;
+    src: url("../fonts/conthrax-sb.ttf");
+}
+
+@font-face {
+    font-family: "CothamSans";
+    src: url("../fonts/CothamSans.otf");
+}
+
+@font-face {
+    font-family: "FuturaStd-Book";
+    src: url("../fonts/FuturaStd-Book.otf");
+}
+
+@font-face {
+    font-family: "FuturaStd-Heavy";
+    src: url("../fonts/FuturaStd-Heavy.otf");
+}
+
+@font-face {
+    font-family: "FuturaStd-LightOblique";
+    src: url("../fonts/FuturaStd-LightOblique.otf");
+}
+
+@font-face {
+    font-family: "FuturaStd-Medium";
+    src: url("../fonts/FuturaStd-Medium.otf");
+}

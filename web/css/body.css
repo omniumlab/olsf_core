@@ -1,0 +1,61 @@
+.x_title {
+    background: #39B54A !important;
+}
+
+.x_title > h1 {
+    color: white !important;
+    padding: 1px 30px 6px !important;
+    text-transform: uppercase !important;
+    margin-top: 20px !important;
+}
+
+.x_title > h2 {
+    color: white;
+    margin-top: 10px !important;
+}
+
+.x_title > h3 {
+    color: white !important;
+}
+
+.x_panel {
+    padding: 0 0 10px 0 !important;
+}
+
+.x_content {
+    padding: 10px 32px !important;
+}
+
+.nav li.current-page {
+    background: rgba(255, 85, 0, 0.8) !important;
+}
+
+body {
+    background: #4d4d4d !important;
+}
+
+th {
+    font-family: FuturaStd-LightOblique, sans-serif !important;
+}
+
+td > span, label {
+    font-family: FuturaStd-Medium, sans-serif !important;
+}
+
+.dropdown-toggle > span {
+    color: #4d4d4d !important;
+}
+
+
+#menu_toggle, .dropdown-toggle > div {
+    color: #4d4d4d !important;
+}
+
+.active-lang {
+    background-color: #4d4d4d !important;
+}
+
+#main .tile-stats .icon i.fa {
+    color: #4d4d4d;
+}
+

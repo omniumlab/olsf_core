@@ -1,0 +1,4 @@
+parameters:
+    locale: en
+
+    fallback_command_bus_class: "Core\\Bus\\SimpleCommandBus"

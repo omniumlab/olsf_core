@@ -1,0 +1,4 @@
+#entity_job_order_add input[name="job_order.employee"] {
+    pointer-events: none;
+    background-color: lightgray;
+}

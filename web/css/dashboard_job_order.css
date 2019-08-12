@@ -1,0 +1,19 @@
+#entity_dashboard_job_order .row > .ng-star-inserted:nth-child(2) .x_panel {
+    display: none;
+}
+
+
+#entity_dashboard_job_order .row > .ng-star-inserted:nth-child(2) .summary.row.top_tiles {
+    position: absolute;
+    bottom: -4px;
+    right: 0;
+    left: 55px;
+}
+
+#entity_dashboard_job_order .row > .ng-star-inserted:nth-child(2) .x_panel_dashboard {
+    min-height: 257px;
+}
+
+#entity_dashboard_job_order .tile-stats {
+    border: none !important;
+}

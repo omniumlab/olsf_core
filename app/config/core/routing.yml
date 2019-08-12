@@ -1,0 +1,13 @@
+controllers:
+    resource: '../src/Core/Controllers/Symfony'
+    type: annotation
+
+api:
+    resource: '../src/Core/Controllers/Symfony/ApiController.php'
+    type: annotation
+    prefix: /%api_prefix%/
+
+JMSTranslationBundle_ui:
+    resource: "@JMSTranslationBundle/Controller/"
+    type:     annotation
+    prefix:   /_trans

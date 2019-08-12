@@ -1,0 +1,7 @@
+#entity_job_order_detail .form-group {
+    pointer-events: none;
+}
+
+#entity_job_order_detail button {
+    display: none;
+}

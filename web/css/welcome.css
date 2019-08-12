@@ -1,0 +1,17 @@
+.welcome_title {
+    color: #4D4D4D;
+    font-family: conthrax-sb, sans-serif;
+    font-size: 50px;
+    border: solid 1px;
+    max-width: 892px;
+    margin: 20px auto auto;
+}
+
+.welcome_description {
+    font-size: 18px;
+    color: #999;
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 36px;
+    line-height: 36px;
+}

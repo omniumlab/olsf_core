@@ -1,0 +1,12 @@
+.menu_wrapper {
+    background-color: rgba(77, 77, 77, 0.92) !important;
+}
+
+.menu_wrapper span, .menu_wrapper h2 {
+    color: white;
+}
+
+.menu-back-btn {
+    background-color: #ff5500;
+    color: white;
+}

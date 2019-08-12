@@ -1,0 +1,43 @@
+@import "fonts.css";
+@import "body.css";
+@import "login.css";
+@import "navbar.css";
+@import "user_add.css";
+@import "client_detail.css";
+@import "welcome.css";
+@import "company_detail.css";
+@import "menu-selector.css";
+@import "signing_event_date_list.css";
+@import "job_order_add.css";
+@import "job_order_detail.css";
+@import "dashboard_job_order.css";
+
+h1 {
+    font-family: conthrax-sb, sans-serif !important;
+}
+
+input {
+    font-family: FuturaStd-Book, sans-serif !important;
+}
+
+a {
+    color: #00DBFF;
+    font-family: CothamSans, sans-serif !important;
+}
+
+
+.btn-success.disabled:hover,
+.btn-success[disabled]:hover,
+fieldset[disabled] .btn-success:hover,
+.btn-success.disabled:focus,
+.btn-success[disabled]:focus,
+fieldset[disabled] .btn-success:focus,
+.btn-success.disabled.focus,
+.btn-success[disabled].focus,
+fieldset[disabled] .btn-success.focus {
+    background-color: #0cf0ed !important;
+}
+
+
+
+
