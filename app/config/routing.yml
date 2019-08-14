@@ -1,0 +1,4 @@
+_core:
+    resource:  core/routing.yml
+_app:
+    resource: ../../../../../app/config/app/routing.yml

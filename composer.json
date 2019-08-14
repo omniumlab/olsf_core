@@ -1,19 +1,20 @@
 {
-    "name": "olsf/core",
-    "type": "library",
-    "description": "",
-    "keywords": [],
-    "homepage": "https://omniumlab.com",
-    "license": "proprietary",
-    "authors": [
-        {
-            "name": "Omnium Lab",
-            "email": "devleoper@omniumlab.com",
-            "homepage": "http://omniumlab.com",
-            "role": "Developer"
-        }
-    ],
-	  "autoload": {
+  "name": "olsf/core",
+  "version": "1.0.0",
+  "type": "library",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://omniumlab.com",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Omnium Lab",
+      "email": "devleoper@omniumlab.com",
+      "homepage": "http://omniumlab.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
     "psr-4": {
       "Core\\": "src/Core"
     }

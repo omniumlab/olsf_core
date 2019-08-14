@@ -1,0 +1,4 @@
+_core_dev:
+    resource:  core/dev_routing.yml
+_main:
+    resource: routing.yml
