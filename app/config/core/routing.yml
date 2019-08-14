@@ -1,9 +1,9 @@
 controllers:
-    resource: '../src/Core/Controllers/Symfony'
+    resource: '../vendor/olsf/core/src/Core/Controllers/Symfony'
     type: annotation
 
 api:
-    resource: '../src/Core/Controllers/Symfony/ApiController.php'
+    resource: '../vendor/olsf/core/src/Core/Controllers/Symfony/ApiController.php'
     type: annotation
     prefix: /%api_prefix%/
 

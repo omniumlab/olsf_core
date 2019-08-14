@@ -1,7 +1,7 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
 parameters:
-    #parameter_name: value
+#parameter_name: value
 
 services:
     # default configuration for services in *this* file
@@ -59,9 +59,7 @@ services:
     Core\Symfony\Yaml\:
         resource: '../../../src/Core/Symfony/Yaml'
 
-    App\:
-        resource: '../../../src/App/*/{Handlers,Entities,Commands,Bus}/'
-        exclude: '../../../src/App/*/Handlers/Responses/*'
+
 
     Core\Config\:
         resource: '../../../src/Core/Config'
@@ -98,40 +96,40 @@ services:
         class: Core\Language\Factory\LanguageFactory
 
     Core\Symfony\RootDirObtainerInterface:
-      class: Core\Symfony\RootDirObtainer
+        class: Core\Symfony\RootDirObtainer
 
     Core\Repository\Image\ImageRepositoryInterface:
-      class: Core\Repository\Image\ImageRepository
+        class: Core\Repository\Image\ImageRepository
 
     Core\Repository\Pdf\PdfRepositoryInterface:
-      class: Core\Repository\Pdf\PdfRepository
+        class: Core\Repository\Pdf\PdfRepository
 
     Core\Services\NotificationPush\PushSenderInterface:
-      class: Core\Services\NotificationPush\NativePushSender
+        class: Core\Services\NotificationPush\NativePushSender
 
     Core\Log\Repository\LogRepositoryInterface:
-      class: Core\Log\Repository\DatabaseLogRepository
+        class: Core\Log\Repository\DatabaseLogRepository
 
     Core\Pdf\PdfGeneratorInterface:
-      class: Core\Pdf\SymfonyPdfGenerator
+        class: Core\Pdf\SymfonyPdfGenerator
 
     Core\Repository\Translation\TranslationRepositoryInterface:
-      class: Core\Repository\Translation\SymfonyTranslationRepository
+        class: Core\Repository\Translation\SymfonyTranslationRepository
 
     Core\Encryptor\EncryptorInterface:
-      class: Core\Encryptor\Encryptor
+        class: Core\Encryptor\Encryptor
 
     Core\Services\StripePayment\StripeInterface:
-      class: Core\Services\StripePayment\StripePaymentMethod
+        class: Core\Services\StripePayment\StripePaymentMethod
 
     Core\Services\PaypalPayment\PaypalInterface:
-      class: Core\Services\PaypalPayment\PaypalPaymentMethod
+        class: Core\Services\PaypalPayment\PaypalPaymentMethod
 
     Core\Services\BBVAPayment\BBVAInterface:
-      class: Core\Services\BBVAPayment\BBVAPaymentMethod
+        class: Core\Services\BBVAPayment\BBVAPaymentMethod
 
     Core\Repository\File\FileRepositoryInterface:
-      class: Core\Repository\File\FileRepository
+        class: Core\Repository\File\FileRepository
 
     Core\Auth\Roles\AnonymousRole:
         class: Core\Auth\Roles\AnonymousRole

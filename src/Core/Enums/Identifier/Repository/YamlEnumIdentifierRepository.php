@@ -38,7 +38,7 @@ class YamlEnumIdentifierRepository extends AbstractEnumIdRepository
     {
         parent::__construct($enumName, $textHandler);
 
-        $this->fileName = __DIR__ . "/../../../../../app/config/app/enums/" . $enumName . ".yml";
+        $this->fileName = __DIR__ . "/../../../../../../../../app/config/app/enums/" . $enumName . ".yml";
     }
 
     /**

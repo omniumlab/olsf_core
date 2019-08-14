@@ -32,7 +32,7 @@ class RootDirObtainer implements RootDirObtainerInterface
     function getRootDir(): string
     {
         $namespaces = explode("\\", __NAMESPACE__);
-        $path = trim(realpath(__DIR__ . str_repeat("/..", count($namespaces) + 1)), "\\\/");
+        $path = trim(realpath(__DIR__ . str_repeat("/..", count($namespaces) + 4)), "\\\/");
 
         return ($this->isLinux ? "/" : "") . $path;
     }

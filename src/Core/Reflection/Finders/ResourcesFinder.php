@@ -42,7 +42,7 @@ class ResourcesFinder extends ClassFinder implements ResourcesFinderInterface
 
     private function getResourcesDir()
     {
-        return $this->getRootDir() . DIRECTORY_SEPARATOR . ResourceInterface::BASE_NAMESPACE;
+        return $this->getRootDir() . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . ResourceInterface::BASE_NAMESPACE;
     }
 
     /**
