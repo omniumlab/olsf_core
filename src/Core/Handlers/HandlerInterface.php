@@ -35,7 +35,6 @@ interface HandlerInterface
     const TYPE_AUTOCOMPLETE = "autocomplete";
     const TYPE_LIST_QUERY = "listquery";
     const TYPE_IMAGE = "image";
-    const TYPE_COLOR = "color";
 
     public function getName(): NameInterface;
 
