@@ -38,7 +38,7 @@ abstract class AbstractGetHandler extends Handler
         $recipients = $this->getRecipients($email->getId());
         $response = $this->getArrayFromEmail($email);
         $response["recipients"] = $recipients;
-        $response["parents"] = $this->getParents($email->getId(), $email->getIdParent());
+        $response["parents"] = $email->getIdParent() === null ? [] : $this->getParents($email->getId(), $email->getIdParent());
 
         return new SuccessHandlerResponse(HttpCodes::CODE_OK, $response);
     }
