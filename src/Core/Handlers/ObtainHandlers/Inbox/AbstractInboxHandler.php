@@ -46,7 +46,7 @@ abstract class AbstractInboxHandler extends AbstractListHandler
         $joinEmailRecipient = "INNER JOIN " . EmailRecipientTableMap::TABLE_NAME . " ON (email.id=" . EmailRecipientTableMap::COL_ID_EMAIL_SENT . ")";
 
         $sql = "SELECT email.id AS 'id', user.name AS 'from_name', user.email AS 'from_email',
- email.subject AS 'subject', email.body AS 'body', email.date AS 'date', email.id_parent AS 'email_sent.id_parent'
+ email.subject AS 'subject', email.body AS 'body', email.date AS 'date', email.id_parent AS 'id_parent'
 
         FROM email_sent as email
 
@@ -57,7 +57,7 @@ abstract class AbstractInboxHandler extends AbstractListHandler
          " WHERE email.id IN (
             SELECT MAX(id) as id
             FROM email_sent 
-            GROUP BY IFNULL(email_sent.id_parent, email_sent.id)
+            GROUP BY IFNULL(id_parent, email_sent.id)
             ORDER BY email_sent.date DESC ) AND " .
 
             ($sent ? "email.id_from=?" : EmailRecipientTableMap::COL_ID_USER . "=?") .
