@@ -31,4 +31,12 @@ interface FileRepositoryInterface
     function deleteFile(string $path);
 
     function uploadResourceByCommand(CommandInterface $command, string $folderName,  ?int $id = null, ?string $fileName = null);
+
+    /**
+     * @param string $filePath Ruta del archivo a mover.
+     * @param string $newPath Ruta de la carpeta donde se quiere mover el archivo.
+     */
+    function moveFile(string $filePath, string $newPath);
+
+    function renameFile(string $filePath, string $newName);
 }

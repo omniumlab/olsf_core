@@ -15,6 +15,7 @@ class InboxEntity extends AbstractEntity
     public function __construct(AbstractInboxHandler $handler, TextHandlerInterface $textHandler)
     {
         parent::__construct($handler, new InboxType(), $textHandler);
+        $this->setOptions(new InboxEntityOptions());
     }
 
     /**

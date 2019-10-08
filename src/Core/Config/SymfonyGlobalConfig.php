@@ -208,5 +208,9 @@ class SymfonyGlobalConfig implements GlobalConfigInterface, ReflectionConfigInte
         return $this->container->getParameter("BBVA_PAYMENT_URL" . strtoupper($env));
     }
 
-
+    public function getHttp(): string
+    {
+        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || $_SERVER['SERVER_PORT'] == 443 ? "https" : "http";
+    }
 }

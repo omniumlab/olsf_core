@@ -64,4 +64,6 @@ interface GlobalConfigInterface
 
     public function getTranslatePath(): string ;
     public function getDatabaseName():string;
+
+    public function getHttp(): string;
 }

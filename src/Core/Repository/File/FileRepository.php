@@ -16,6 +16,7 @@ use Core\Symfony\RootDirObtainerInterface;
 
 class FileRepository implements FileRepositoryInterface
 {
+
     /** @var RootDirObtainerInterface */
     private $rootDirObtainer;
 
@@ -67,10 +68,24 @@ class FileRepository implements FileRepositoryInterface
             unset($files[1]);
         }
 
+        if (!empty($files))
+            $files = $this->orderFilesDesc($files, $path);
+
         if ($nameFilter !== null)
             $this->filterFiles($nameFilter, $files);
 
-        return empty($files) ? [] : array_slice($files, $offset, $limit);
+        $files = empty($files) ? [] : array_slice($files, $offset, $limit);
+        return $files;
+    }
+
+    private function orderFilesDesc(array $files, string $path): array
+    {
+        $orderFiles = [];
+        foreach ($files as $file) {
+            $orderFiles[$file] = filemtime($path . '/' . $file);
+        }
+        arsort($orderFiles);
+        return array_keys($orderFiles);
     }
 
     private function filterFiles(string $filter, array &$files)
@@ -111,5 +126,27 @@ class FileRepository implements FileRepositoryInterface
 
         return $absolutePath;
     }
+
+    function moveFile(string $filePath, string $newPath)
+    {
+        if (file_exists($filePath)){
+            if (!file_exists($newPath))
+                mkdir($newPath, 0777, true);
+
+            $fileName = basename($filePath);
+
+            rename($filePath, $newPath . "/" . $fileName);
+        }
+    }
+
+    function renameFile(string $filePath, string $newName)
+    {
+        if (file_exists($filePath)){
+            $fileName = basename($filePath);
+            $path = str_replace($fileName, "", $filePath);
+            rename($filePath, $path . $newName);
+        }
+    }
+
 
 }
