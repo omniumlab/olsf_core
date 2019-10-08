@@ -42,7 +42,7 @@ abstract class AbstractInboxHandler extends AbstractListHandler
         $idUser = $this->authService->getCurrentConnectedUser()->getId();
         $offset= $command->get("offset", 0);
         $limit = $command->get("limit", 10);
-        $sent = $command->get("sent". "0") == 1;
+        $sent = $command->get("sent", "0") == 1;
         $joinEmailRecipient = "INNER JOIN " . EmailRecipientTableMap::TABLE_NAME . " ON (email.id=" . EmailRecipientTableMap::COL_ID_EMAIL_SENT . ")";
 
         $sql = "SELECT email.id AS 'id', user.name AS 'from_name', user.email AS 'from_email',
@@ -60,7 +60,7 @@ abstract class AbstractInboxHandler extends AbstractListHandler
             GROUP BY IFNULL(email_sent.id_parent, email_sent.id)
             ORDER BY email_sent.date DESC ) AND " .
 
-            ($sent ? EmailSentTableMap::COL_ID_FROM . "=?" : EmailRecipientTableMap::COL_ID_USER . "=?") .
+            ($sent ? "email.id_from=?" : EmailRecipientTableMap::COL_ID_USER . "=?") .
 
         " LIMIT " . $limit . " OFFSET ". $offset;
 
