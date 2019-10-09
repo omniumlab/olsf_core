@@ -38,7 +38,7 @@ abstract class AbstractUploadFileHandler extends Handler
         $this->customizePath($folder, $this->authService->getCurrentConnectedUser()->getId());
         $folder .= $command->get("path", null, true);
 
-        $fileName = $command->get("filename", null, true);
+        $fileName = $command->get("filename");
 
         $this->fileRepository->uploadResourceByCommand($command, $folder, null, $fileName);
         return new SuccessHandlerResponse(HttpCodes::CODE_OK);
