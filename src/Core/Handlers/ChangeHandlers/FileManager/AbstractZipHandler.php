@@ -6,6 +6,7 @@ namespace Core\Handlers\ChangeHandlers\FileManager;
 
 use Core\Auth\AuthServiceInterface;
 use Core\Config\GlobalConfigInterface;
+use Core\Exceptions\RestException;
 use Core\Handlers\Handler;
 use Core\Output\HttpCodes;
 use Core\Output\Responses\HandlerResponseInterface;
@@ -61,6 +62,8 @@ abstract class AbstractZipHandler extends Handler
 
             $zip->close();
         }
+        if(!file_exists($zipPath))
+            throw new RestException(HttpCodes::CODE_CONFLICT, "Zip not created");
 
         return new SuccessHandlerResponse(HttpCodes::CODE_OK);
     }

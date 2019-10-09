@@ -48,7 +48,7 @@ abstract class AbstractDownloadHandler extends Handler
     public function handle($command): HandlerResponseInterface
     {
         $relativePath = $command->get("path", null, true);
-        $fileName = $command->get("file_name", null, true);
+        $fileName = $command->get("file_name");
         $file = basename($relativePath);
 
         $exploded = explode(".", $file);
@@ -60,7 +60,7 @@ abstract class AbstractDownloadHandler extends Handler
         $path .= $relativePath;
 
         return new SuccessHandlerResponse(HttpCodes::CODE_OK, [
-            "name" => $fileName . "." . $fileType,
+            "name" => $fileName === null ? $file : ($fileName . "." . $fileType),
             "url" => $path,
             "mime_type" => $this->getMimeType($relativePath)
         ], $this->getTextHandler()->get("download_success"));
