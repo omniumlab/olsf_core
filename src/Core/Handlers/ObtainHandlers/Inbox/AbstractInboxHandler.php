@@ -62,12 +62,13 @@ abstract class AbstractInboxHandler extends AbstractListHandler
 
             ($sent ? "email.id_from=?" : EmailRecipientTableMap::COL_ID_USER . "=?") .
 
-        " LIMIT " . $limit . " OFFSET ". $offset;
+        " ORDER BY date DESC LIMIT " . $limit . " OFFSET ". $offset;
 
         $con = Propel::getConnection();
         $stmt = $con->prepare($sql);
         $stmt->bindValue(1, $idUser);
         $stmt->execute();
+        $data = [];
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $up) {
             $data[] = $up;
         }
