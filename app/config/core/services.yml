@@ -63,8 +63,8 @@ services:
         resource: '../../../src/Core/Symfony/Yaml'
 
     App\:
-        resource: '../../../src/App/*/{Handlers,Entities,Commands,Bus}/'
-        exclude: '../../../src/App/*/Handlers/Responses/*'
+        resource: '../../../../../../src/App/*/{Handlers,Entities,Commands,Bus}/'
+        exclude: '../../../../../../src/App/*/Handlers/Responses/*'
 
     Core\Config\:
         resource: '../../../src/Core/Config'
