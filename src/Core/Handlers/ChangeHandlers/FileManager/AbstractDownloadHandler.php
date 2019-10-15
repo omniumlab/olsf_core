@@ -66,7 +66,7 @@ abstract class AbstractDownloadHandler extends Handler
         ], $this->getTextHandler()->get("download_success"));
     }
 
-    private function customizePath(string &$path)
+    protected function customizePath(string &$path)
     {
         $idUser = $this->authService->getCurrentConnectedUser()->getId();
         $path .= "/" . $idUser;

@@ -34,7 +34,7 @@ abstract class AbstractUploadFileHandler extends Handler
 
     public function handle($command): HandlerResponseInterface
     {
-        $folder = "/file_manager";
+        $folder = "file_manager";
         $this->customizePath($folder, $this->authService->getCurrentConnectedUser()->getId());
         $folder .= $command->get("path", null, true);
 

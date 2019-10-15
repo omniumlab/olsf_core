@@ -47,13 +47,15 @@ class ClassFinder implements ClassFinderInterface
 
     private function getNamespaceDir($namespace)
     {
-        $rootDir = $this->getRootDir() . DIRECTORY_SEPARATOR . "src";
+        $rootDir = $this->getRootDir();
 
         return str_replace("\\", DIRECTORY_SEPARATOR, $rootDir . DIRECTORY_SEPARATOR . $namespace);
     }
 
     protected function getRootDir()
     {
-        return $this->rootDirObtainer->getRootDir();
+        $namespaces = explode("\\", __NAMESPACE__);
+
+        return realpath(__DIR__ . str_repeat("/..", count($namespaces)));
     }
 }

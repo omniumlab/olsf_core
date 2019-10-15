@@ -97,7 +97,21 @@ class FileRepository implements FileRepositoryInterface
 
     function deleteFile(string $path)
     {
-        unlink($path);
+        if (is_dir($path)){
+            $this->rmrf($path);
+        } else
+            unlink($path);
+    }
+
+    private function rmrf($dir) {
+        foreach (glob($dir) as $file) {
+            if (is_dir($file)) {
+                $this->rmrf("$file/*");
+                rmdir($file);
+            } else {
+                unlink($file);
+            }
+        }
     }
 
     function uploadResourceByCommand(CommandInterface $command, string $folderName, ?int $id = null, ?string $fileName = null)
