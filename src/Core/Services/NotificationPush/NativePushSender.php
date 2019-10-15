@@ -25,7 +25,7 @@ class NativePushSender implements PushSenderInterface
 
     function __construct(GlobalConfigInterface $config, RootDirObtainerInterface $rootDirObtainer)
     {
-        $this->pemCertificate = $rootDirObtainer->getRootDir() . "/app/config/push/ck_" . $config->getEnvironment() . ".pem";
+        $this->pemCertificate = $rootDirObtainer->getRootDir() . "/private/app/config/push/ck_" . $config->getEnvironment() . ".pem";
         $this->fcmKey = $config->getFCMKey();
         $this->apnPass = $config->getApnsPass();
     }

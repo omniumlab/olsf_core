@@ -39,7 +39,7 @@ class SymfonyPdfGenerator implements PdfGeneratorInterface
         $this->pdfGenerator = $globalConfig->getPdf();
         $this->templateEngine = $templateEngine;
         $this->rootDirObtainer = $rootDirObtainer;
-        $this->rootDir = $rootDirObtainer->getRootDir();
+        $this->rootDir = $rootDirObtainer->getRootDir() . "/private";
     }
 
     function generate(string $resource, string $templateName, int $id = null, array $parameters = [])
