@@ -1,5 +1,6 @@
 {
     "app.component.loading": "Loading ...",
+    "app.autocomplete": "Click to select ...",
     "Login-header": "Login Form",
     "table.component.dataTables_info": "Showing {{value1}} to {{value2}} of {{value3}} entries",
     "table.component.updatelist": "Refresh list",
@@ -48,5 +49,32 @@
     "fileRemoveAll": "Remove all",
     "fileQueueProgress": "Queue progress:",
     "Confirmation": "Confirmation Needed",
-    "Ok": "Ok"
+    "Ok": "Ok",
+    "file-manager.move_to": "Move to",
+    "file-manager.rename": "Rename",
+    "file-manager.delete": "Delete",
+    "file-manager.create_zip": "Create zip",
+    "file-manager.download": "Download",
+    "file-manager.create_folder": "Create folder",
+    "file-manager.upload": "Upload File",
+    "file-manager.select": "Select files or folders",
+    "file-manager.dialog_zip_title_name": "Choose a zip name",
+    "file-manager.dialog_zip_placeholder": "Zip name",
+    "file-manager.dialog_new_folder_title_name": "Folder name",
+    "file-manager.dialog_new_folder_placeholder": "Choose a name",
+    "file-manager-dialog.cancel_button": "Cancel",
+    "file-manager-dialog.ok_button": "Ok",
+    "file-manager.rename_dialog": "Choose a new name",
+    "file-manager.dialog_info_error_zip": "The folder has not files or has empty folders",
+    "inbox.write_new_mail": "Write a mail",
+    "inbox.load_more": "Load more",
+    "inbox.reply": "Reply",
+    "inbox.received_tab": "Ibox",
+    "inbox.send_tab": "Outbox",
+    "inbox.subject": "Subject",
+    "inbox.choose_receiver": "Write a receiver",
+    "inbox.to": "To",
+    "inbox.new_message": "New message"
+
+
 }
