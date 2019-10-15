@@ -54,8 +54,6 @@ class ClassFinder implements ClassFinderInterface
 
     protected function getRootDir()
     {
-        $namespaces = explode("\\", __NAMESPACE__);
-
-        return realpath(__DIR__ . str_repeat("/..", count($namespaces)));
+        return realpath(__DIR__ . str_repeat("/..", 7) . "/src");
     }
 }
