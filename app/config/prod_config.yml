@@ -9,7 +9,7 @@ imports:
 
 framework:
     router:
-        resource: '%kernel.project_dir%/app/config/app/routing.yml'
+        resource: '%kernel.project_dir%/vendor/olsf/core/app/config/routing.yml'
         strict_requirements: ~
 
 monolog:
