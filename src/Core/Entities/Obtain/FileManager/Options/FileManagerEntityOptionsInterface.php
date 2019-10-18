@@ -14,6 +14,7 @@ interface FileManagerEntityOptionsInterface
      *     entity_delete: string
      *     entity_zip: string
      *     entity_download: string
+     *     entity_viewer: string
          */
 
 
@@ -30,4 +31,10 @@ interface FileManagerEntityOptionsInterface
     function setEntityZip(string $entityName): FileManagerEntityOptionsInterface;
 
     function setEntityDownload(string $entityName): FileManagerEntityOptionsInterface;
+
+    /**
+     * @param string $entityName nombre de una entidad de tipo iframe
+     * @return FileManagerEntityOptionsInterface
+     */
+    function setEntityViewer(string $entityName): FileManagerEntityOptionsInterface;
 }

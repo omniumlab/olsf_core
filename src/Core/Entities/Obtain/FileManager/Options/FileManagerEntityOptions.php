@@ -50,4 +50,10 @@ class FileManagerEntityOptions extends EntityOptions implements FileManagerEntit
         $this->setVariable("entity_download", $entityName);
         return $this;
     }
+
+    function setEntityViewer(string $entityName): FileManagerEntityOptionsInterface
+    {
+        $this->setVariable("entity_viewer", $entityName);
+        return $this;
+    }
 }
