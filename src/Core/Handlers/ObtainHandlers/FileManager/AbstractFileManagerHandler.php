@@ -52,6 +52,7 @@ abstract class AbstractFileManagerHandler extends Handler
         $this->customizePath($path, $idUser);
         $path .= $folder;
 
+        $path = str_replace("\\", "/", $path);
         if (file_exists($path)){
             $files = scandir($path);
             if (in_array("..", $files))

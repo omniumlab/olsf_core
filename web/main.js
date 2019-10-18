@@ -1621,6 +1621,7 @@ var FileManagerComponent = /** @class */ (function () {
             }
             _this.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, params, _this.urlReplacements);
         });
+        this.uploadUrl.addUrlParams(this.urlReplacements);
         var fileOptions = {};
         fileOptions.url = this.uploadUrl.path;
         fileOptions.additionalParameter = this.urlReplacements;

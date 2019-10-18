@@ -10,6 +10,8 @@ namespace Core\Symfony;
 
 
 use Core\Config\GlobalConfigInterface;
+use Core\Exceptions\RestException;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class RootDirObtainer implements RootDirObtainerInterface
 {
@@ -19,11 +21,16 @@ class RootDirObtainer implements RootDirObtainerInterface
 
     /** @var string */
     private $publicDir;
+    /**
+     * @var KernelInterface
+     */
+    private $kernel;
 
-    function __construct(GlobalConfigInterface $globalConfig)
+    function __construct(GlobalConfigInterface $globalConfig, KernelInterface $kernel)
     {
         $this->isLinux = $globalConfig->isLinux();
         $this->publicDir = $globalConfig->getPublicDir();
+        $this->kernel = $kernel;
     }
 
     /**
@@ -31,10 +38,11 @@ class RootDirObtainer implements RootDirObtainerInterface
      */
     function getRootDir(): string
     {
-        $namespaces = explode("\\", __NAMESPACE__);
-        $path = trim(realpath(__DIR__ . str_repeat("/..", count($namespaces) + 7)), "\\\/");
+//$path =  trim($this->kernel->getRootDir(), "\\\/") ;
+        //$path = trim(realpath(__DIR__ . str_repeat("/..",  7)), "\\\/");
+        $path = $this->kernel->getRootDir() . str_repeat("/..", 2);
 
-        return ($this->isLinux ? "/" : "") . $path;
+        return $path;
     }
 
     function getUrlBase(): string

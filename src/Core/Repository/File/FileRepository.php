@@ -125,7 +125,6 @@ class FileRepository implements FileRepositoryInterface
         if ($fileName === null)
             $fileName = basename($file['name']);
 
-
         if (!move_uploaded_file($file['tmp_name'], $path . "/" . $fileName)) {
             throw new RestException(HttpCodes::CODE_CONFLICT, "Too many files uploaded");
         }
@@ -135,6 +134,7 @@ class FileRepository implements FileRepositoryInterface
     {
         $folder = "/files/" . $folderName;
         $absolutePath = $this->rootDirObtainer->getPublicDir() . $folder;
+        $absolutePath = str_replace("//", "/", $absolutePath);
         if (!file_exists($absolutePath))
             mkdir($absolutePath, 0777, true);
 
