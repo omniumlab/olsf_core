@@ -1447,6 +1447,7 @@ var FileManagerComponent = /** @class */ (function () {
     FileManagerComponent.prototype.moveElement = function (element, moveTo) {
         var _this = this;
         this.movetoUrl.addUrlParams(this.urlReplacements);
+        this.movetoUrl.queryParams = this.urlReplacements;
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_9__["RequestBase"](this.movetoUrl, 'PUT', this.serviceHolder);
         request.addRequestValue('file_path', element.path);
         request.addRequestValue('new_path', moveTo.path);
@@ -1494,6 +1495,7 @@ var FileManagerComponent = /** @class */ (function () {
     FileManagerComponent.prototype.addFolder = function (folder) {
         var _this = this;
         this.createFolderUrl.addUrlParams(this.urlReplacements);
+        this.createFolderUrl.queryParams = this.urlReplacements;
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_9__["RequestBase"](this.createFolderUrl, 'POST', this.serviceHolder);
         folder.name = folder.name.replace('/', '');
         request.addRequestValue('path', (this.currentRoot ? this.currentRoot.path : '') + '/' + folder.name);
@@ -1552,6 +1554,7 @@ var FileManagerComponent = /** @class */ (function () {
     FileManagerComponent.prototype.removeElement = function (element) {
         var _this = this;
         this.deleteUrl.addUrlParams(this.urlReplacements);
+        this.deleteUrl.queryParams = this.urlReplacements;
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_9__["RequestBase"](this.deleteUrl, 'DELETE', this.serviceHolder);
         request.addRequestValue('file_path', element.parent + '/' + element.name);
         request.execute().subscribe(function (it) {
@@ -1566,6 +1569,7 @@ var FileManagerComponent = /** @class */ (function () {
     FileManagerComponent.prototype.renameElement = function (element, res) {
         var _this = this;
         this.renameUrl.addUrlParams(this.urlReplacements);
+        this.renameUrl.queryParams = this.urlReplacements;
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_9__["RequestBase"](this.renameUrl, 'PUT', this.serviceHolder);
         request.addRequestValue('file_path', element.path);
         request.addRequestValue('new_name', res);
@@ -1630,6 +1634,8 @@ var FileManagerComponent = /** @class */ (function () {
                 var result = res.split('.').slice(0, -1).join('.');
                 res = result ? result : res;
                 var name_1 = res + '.zip';
+                _this.createZipUrl.queryParams = _this.urlReplacements;
+                _this.createZipUrl.addUrlParams(_this.urlReplacements);
                 var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_9__["RequestBase"](_this.createZipUrl, 'POST', _this.serviceHolder);
                 request.addRequestValue('file_paths', element.path);
                 request.addRequestValue('zip_path', (_this.currentRoot ? _this.currentRoot.path : '') + '/' + name_1);
@@ -1650,6 +1656,7 @@ var FileManagerComponent = /** @class */ (function () {
     FileManagerComponent.prototype.download = function (element) {
         var _this = this;
         this.downloadUrl.addUrlParams(this.urlReplacements);
+        this.downloadUrl.queryParams = this.urlReplacements;
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_9__["RequestBase"](this.downloadUrl, 'GET', this.serviceHolder);
         request.addRequestValue('path', element.path);
         request.execute().subscribe(function (it) {
@@ -1673,6 +1680,7 @@ var FileManagerComponent = /** @class */ (function () {
         });
         if (this.uploadUrl !== undefined) {
             this.uploadUrl.addUrlParams(this.urlReplacements);
+            this.uploadUrl.queryParams = this.urlReplacements;
             var fileOptions = {};
             fileOptions.url = this.uploadUrl.path;
             fileOptions.additionalParameter = this.urlReplacements;
