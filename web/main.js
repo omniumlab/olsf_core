@@ -1683,7 +1683,7 @@ var FileManagerComponent = /** @class */ (function () {
             this.uploadUrl.queryParams = this.urlReplacements;
             var fileOptions = {};
             fileOptions.url = this.uploadUrl.path;
-            fileOptions.additionalParameter = this.urlReplacements;
+            fileOptions.additionalParameter = Object.assign({}, this.urlReplacements);
             fileOptions.additionalParameter['path'] = this.currentRoot ? this.currentRoot.path : '/';
             fileOptions.headers = [{ name: 'X-Auth-Token', value: this.serviceHolder.authService.sessionToken }, {
                     name: 'lang',
