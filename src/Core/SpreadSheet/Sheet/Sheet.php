@@ -159,7 +159,7 @@ class Sheet implements SheetInterface
      */
     function getMergeCells(): array
     {
-        return $this->mergeCells;
+        return empty($this->mergeCells) ? [] : $this->mergeCells ;
     }
 
     function clear(): void
