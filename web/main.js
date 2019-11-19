@@ -2015,6 +2015,7 @@ var FormComponent = /** @class */ (function (_super) {
     FormComponent.prototype.doAjax = function (value, response, still) {
         var _this = this;
         if (still === void 0) { still = false; }
+        this.onOk = value.getMethodOnActionOk(this).bind(this);
         var url = value.getRestUrl({ id: response.data[Object.keys(response.data)[0]] });
         url.queryParams = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams, response.data);
         url.params = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams, response.data);
@@ -2023,12 +2024,7 @@ var FormComponent = /** @class */ (function (_super) {
         request.type = value.restMethod;
         request.execute().subscribe(function (response2) {
             if (response2.isSuccess()) {
-                if (still) {
-                    _this.item.resetValues();
-                }
-                else {
-                    _this.location.back();
-                }
+                _this.onOk(response2);
             }
         });
     };
@@ -2070,6 +2066,9 @@ var FormComponent = /** @class */ (function (_super) {
         }, function (error) { return _this.buttonDisable = false; }, function () {
             return _this.buttonDisable = false;
         });
+    };
+    FormComponent.prototype.downloadFile = function (filename, fileurl, mimetype) {
+        this.entity.getServiceHolder().restService.downloadFile(fileurl, filename, mimetype);
     };
     return FormComponent;
 }(_base_entity_component__WEBPACK_IMPORTED_MODULE_3__["BaseEntityComponent"]));
