@@ -1998,7 +1998,7 @@ var FormComponent = /** @class */ (function (_super) {
                 if (_this.entity.data.saveEntityUrl !== undefined) {
                     _this.entity.getServiceHolder().entitiesFinder.findEntityByName(_this.entity.data.saveEntityUrl)
                         .subscribe(function (value) {
-                        value.getRestUrl() ? _this.doAjax(value, response) : _this.doRedirect(value);
+                        value.getRestUrl() ? _this.doAjax(value, response, true) : _this.doRedirect(value);
                     });
                 }
                 else {
@@ -2012,19 +2012,23 @@ var FormComponent = /** @class */ (function (_super) {
         url.queryParams = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, url.queryParams, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams);
         this.entity.getServiceHolder().router.navigateByUrl(url.path);
     };
-    FormComponent.prototype.doAjax = function (value, response) {
+    FormComponent.prototype.doAjax = function (value, response, still) {
         var _this = this;
+        if (still === void 0) { still = false; }
         var url = value.getRestUrl({ id: response.data[Object.keys(response.data)[0]] });
-        if (value.restMethod === 'POST') {
-            url.queryParams = this.activatedRoute.snapshot.queryParams;
-        }
-        url.params = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams);
+        url.queryParams = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams, response.data);
+        url.params = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams, response.data);
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_4__["RequestBase"](url, value.restMethod, this.entity.getServiceHolder());
         request.addRequestValues(this.entity.urlParams);
         request.type = value.restMethod;
         request.execute().subscribe(function (response2) {
             if (response2.isSuccess()) {
-                _this.location.back();
+                if (still) {
+                    _this.item.resetValues();
+                }
+                else {
+                    _this.location.back();
+                }
             }
         });
     };
@@ -2050,7 +2054,18 @@ var FormComponent = /** @class */ (function (_super) {
             _this.buttonDisable = false;
             if (response.isSuccess()) {
                 _this.uploadFiles(response);
-                _this.item.resetValues();
+                if (response.data.saveEntityUrl !== undefined) {
+                    _this.entity.data.saveEntityUrl = response.data.saveEntityUrl;
+                }
+                if (_this.entity.data.saveEntityUrl !== undefined) {
+                    _this.entity.getServiceHolder().entitiesFinder.findEntityByName(_this.entity.data.saveEntityUrl)
+                        .subscribe(function (value) {
+                        value.getRestUrl() ? _this.doAjax(value, response, true) : _this.doRedirect(value);
+                    });
+                }
+                else {
+                    _this.item.resetValues();
+                }
             }
         }, function (error) { return _this.buttonDisable = false; }, function () {
             return _this.buttonDisable = false;
