@@ -58,6 +58,7 @@ class FilterManager
 
         switch ($column->getType()) {
             case PropelTypes::TIMESTAMP:
+            case PropelTypes::DATE:
                 $filter = $this->getTimeFilters($column, $value, $comparison, $connector);
                 break;
             default:
