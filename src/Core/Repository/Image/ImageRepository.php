@@ -91,7 +91,9 @@ class ImageRepository implements ImageRepositoryInterface
         }
 
         if (!file_exists($directory)){
+            $oldmask = umask(0);
             mkdir($directory, 0777, true);
+            umask($oldmask);
         }
 
         $tempPath = tempnam(sys_get_temp_dir(), "olsf");
@@ -113,6 +115,7 @@ class ImageRepository implements ImageRepositoryInterface
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
         file_put_contents($file, $image_base64);
+        chmod($file, 0777);
 
         return $image_type;
     }
