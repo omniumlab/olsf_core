@@ -1,6 +1,6 @@
 {
   "name": "olsf/core",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "type": "library",
   "description": "",
   "keywords": [],
@@ -9,7 +9,7 @@
   "authors": [
     {
       "name": "Omnium Lab",
-      "email": "devleoper@omniumlab.com",
+      "email": "developer@omniumlab.com",
       "homepage": "http://omniumlab.com",
       "role": "Developer"
     }
