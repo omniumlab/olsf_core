@@ -4,6 +4,7 @@
 namespace Core\Entities\Obtain\TreeList\Options;
 
 
+use Core\Entities\Options\ActionInterface;
 use Core\Entities\Options\EntityOptions;
 
 class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptionsInterface
@@ -33,11 +34,12 @@ class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptio
         return $this;
     }
 
-    public function addEntity(string $visualName, string $entityName): TreeListEntityOptionsInterface
+    public function addEntity(string $visualName, string $entityName, ?string $actionStyle = ActionInterface::STYLE_SUCCESS): TreeListEntityOptionsInterface
     {
         $this->addItemToVariablesList("entities", [
             "name" => $visualName,
-            "entity" => $entityName
+            "entity" => $entityName,
+            "style" => $actionStyle
         ]);
         return $this;
     }
