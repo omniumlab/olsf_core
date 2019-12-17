@@ -4,6 +4,7 @@
 namespace Core\Handlers\ObtainHandlers\TreeList\Value;
 
 
+use Core\ListValue\BaseListValue;
 use Core\ListValue\ListValueInterface;
 use Core\ListValue\ValueInterface;
 
@@ -15,12 +16,14 @@ class TreeValue implements ValueInterface
      * "value" string
      * "arguments" ?[string => string]
      * "selectable" ?bool
+     * "spreadable" ?bool
      * "children" TreeValue[]
      */
     private $variables;
 
     public function __construct()
     {
+        $this->variables = new BaseListValue();
         $this->setChildren([]);
     }
 
@@ -32,7 +35,7 @@ class TreeValue implements ValueInterface
 
     public function setValue(string $value): TreeValue
     {
-        $this->variables->setValue("value", $value);
+        $this->variables->setValue($value, "value");
         return $this;
     }
 
@@ -41,7 +44,7 @@ class TreeValue implements ValueInterface
         if ($arguments === null)
             return $this;
 
-        $this->variables->setValue("arguments", $arguments);
+        $this->variables->setValue($arguments, "arguments");
         return $this;
     }
 
@@ -50,7 +53,16 @@ class TreeValue implements ValueInterface
         if ($selectable === null)
             return $this;
 
-        $this->variables->setValue("selectable", $selectable);
+        $this->variables->setValue($selectable, "selectable");
+        return $this;
+    }
+
+    public function setSpreadable(?bool $spreadable): TreeValue
+    {
+        if ($spreadable === null)
+            return $this;
+
+        $this->variables->setValue($spreadable, "spreadable");
         return $this;
     }
 
@@ -60,7 +72,7 @@ class TreeValue implements ValueInterface
      */
     public function setChildren(array $children): TreeValue
     {
-        $this->variables->setValue("children", $children);
+        $this->variables->setValue($children, "children");
         return $this;
     }
 

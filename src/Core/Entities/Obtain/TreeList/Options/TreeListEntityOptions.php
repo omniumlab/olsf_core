@@ -18,6 +18,7 @@ class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptio
 
     public function __construct()
     {
+        parent::__construct();
         $this->setOnlyId(true);
         $this->setEntities([]);
     }

@@ -712,7 +712,7 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.5' };
+var core = module.exports = { version: '2.6.10' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -1460,6 +1460,7 @@ module.exports = {
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
+var DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ "./node_modules/core-js/modules/_descriptors.js");
 var getKeys = __webpack_require__(/*! ./_object-keys */ "./node_modules/core-js/modules/_object-keys.js");
 var gOPS = __webpack_require__(/*! ./_object-gops */ "./node_modules/core-js/modules/_object-gops.js");
 var pIE = __webpack_require__(/*! ./_object-pie */ "./node_modules/core-js/modules/_object-pie.js");
@@ -1489,7 +1490,10 @@ module.exports = !$assign || __webpack_require__(/*! ./_fails */ "./node_modules
     var length = keys.length;
     var j = 0;
     var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || isEnum.call(S, key)) T[key] = S[key];
+    }
   } return T;
 } : $assign;
 
@@ -5525,7 +5529,11 @@ function propertyDescriptorPatch(api, _global) {
             patchFilteredProperties(Worker_1.prototype, workerEventNames, ignoreProperties);
         }
     }
-    patchFilteredProperties(XMLHttpRequest.prototype, XMLHttpRequestEventNames, ignoreProperties);
+    var XMLHttpRequest = _global['XMLHttpRequest'];
+    if (XMLHttpRequest) {
+        // XMLHttpRequest is not available in ServiceWorker, so we need to check here
+        patchFilteredProperties(XMLHttpRequest.prototype, XMLHttpRequestEventNames, ignoreProperties);
+    }
     var XMLHttpRequestEventTarget = _global['XMLHttpRequestEventTarget'];
     if (XMLHttpRequestEventTarget) {
         patchFilteredProperties(XMLHttpRequestEventTarget && XMLHttpRequestEventTarget.prototype, XMLHttpRequestEventNames, ignoreProperties);
@@ -5627,7 +5635,7 @@ function eventTargetLegacyPatch(_global, api) {
         apis = WTF_ISSUE_555_ARRAY.map(function (v) { return 'HTML' + v + 'Element'; }).concat(NO_EVENT_TARGET);
     }
     else if (_global[EVENT_TARGET]) {
-        // EventTarget is already patched in browser.ts
+        apis.push(EVENT_TARGET);
     }
     else {
         // Note: EventTarget is not available in all browsers,
@@ -5702,6 +5710,7 @@ function eventTargetLegacyPatch(_global, api) {
     // vh is validateHandler to check event handler
     // is valid or not(for security check)
     api.patchEventTarget(_global, apiTypes, { vh: checkIEAndCrossContext });
+    Zone[api.symbol('patchEventTarget')] = !!_global[EVENT_TARGET];
     return true;
 }
 
@@ -5776,8 +5785,8 @@ function propertyDescriptorLegacyPatch(api, _global) {
     if (isNode && !isMix) {
         return;
     }
-    var supportsWebSocket = typeof WebSocket !== 'undefined';
-    if (!canPatchViaPropertyDescriptor(api)) {
+    if (!canPatchViaPropertyDescriptor(api, _global)) {
+        var supportsWebSocket = typeof WebSocket !== 'undefined';
         // Safari, Android browsers (Jelly Bean)
         patchViaCapturingAllTheEvents(api);
         api.patchClass('XMLHttpRequest');
@@ -5787,7 +5796,7 @@ function propertyDescriptorLegacyPatch(api, _global) {
         Zone[api.symbol('patchEvents')] = true;
     }
 }
-function canPatchViaPropertyDescriptor(api) {
+function canPatchViaPropertyDescriptor(api, _global) {
     var _a = api.getGlobalObjects(), isBrowser = _a.isBrowser, isMix = _a.isMix;
     if ((isBrowser || isMix) &&
         !api.ObjectGetOwnPropertyDescriptor(HTMLElement.prototype, 'onclick') &&
@@ -5797,6 +5806,26 @@ function canPatchViaPropertyDescriptor(api) {
         var desc = api.ObjectGetOwnPropertyDescriptor(Element.prototype, 'onclick');
         if (desc && !desc.configurable)
             return false;
+        // try to use onclick to detect whether we can patch via propertyDescriptor
+        // because XMLHttpRequest is not available in service worker
+        if (desc) {
+            api.ObjectDefineProperty(Element.prototype, 'onclick', {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return true;
+                }
+            });
+            var div = document.createElement('div');
+            var result = !!div.onclick;
+            api.ObjectDefineProperty(Element.prototype, 'onclick', desc);
+            return result;
+        }
+    }
+    var XMLHttpRequest = _global['XMLHttpRequest'];
+    if (!XMLHttpRequest) {
+        // XMLHttpRequest is not available in service worker
+        return false;
     }
     var ON_READY_STATE_CHANGE = 'onreadystatechange';
     var XMLHttpRequestPrototype = XMLHttpRequest.prototype;
@@ -6049,7 +6078,7 @@ function patchTimer(window, setName, cancelName, nameSuffix) {
  */
 function patchCustomElements(_global, api) {
     var _a = api.getGlobalObjects(), isBrowser = _a.isBrowser, isMix = _a.isMix;
-    if ((!isBrowser && !isMix) || !('customElements' in _global)) {
+    if ((!isBrowser && !isMix) || !_global['customElements'] || !('customElements' in _global)) {
         return;
     }
     var callbacks = ['connectedCallback', 'disconnectedCallback', 'adoptedCallback', 'attributeChangedCallback'];
@@ -6064,6 +6093,10 @@ function patchCustomElements(_global, api) {
  * found in the LICENSE file at https://angular.io/license
  */
 function eventTargetPatch(_global, api) {
+    if (Zone[api.symbol('patchEventTarget')]) {
+        // EventTarget is already patched.
+        return;
+    }
     var _a = api.getGlobalObjects(), eventNames = _a.eventNames, zoneSymbolEventNames = _a.zoneSymbolEventNames, TRUE_STR = _a.TRUE_STR, FALSE_STR = _a.FALSE_STR, ZONE_SYMBOL_PREFIX = _a.ZONE_SYMBOL_PREFIX;
     //  predefine all __zone_symbol__ + eventName + true/false string
     for (var i = 0; i < eventNames.length; i++) {
@@ -6157,6 +6190,11 @@ Zone.__load_patch('XHR', function (global, Zone) {
     var XHR_URL = zoneSymbol('xhrURL');
     var XHR_ERROR_BEFORE_SCHEDULED = zoneSymbol('xhrErrorBeforeScheduled');
     function patchXHR(window) {
+        var XMLHttpRequest = window['XMLHttpRequest'];
+        if (!XMLHttpRequest) {
+            // XMLHttpRequest is not available in service worker
+            return;
+        }
         var XMLHttpRequestPrototype = XMLHttpRequest.prototype;
         function findPendingTask(target) {
             return target[XHR_TASK];

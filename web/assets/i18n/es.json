@@ -42,14 +42,16 @@
     "fileDropZone": "Arrastra aquí para añadir",
     "fileSelect": "Zona de selección de archivos",
     "fileUpload": "Subir",
-    "fileUploadAll": "Subir todo",
+    "fileUploadAll": " Subir todo",
     "fileCancel": "Cancelar",
-    "fileCancelAll": "Cancelar todo",
+    "fileCancelAll": " Cancelar todo",
     "fileRemove": "Eliminar",
-    "fileRemoveAll": "Eliminar todo",
+    "fileRemoveAll": " Eliminar todo",
     "fileQueueProgress": "Progreso de la cola:",
     "Confirmation": "Confirmación necesaria",
     "Ok": "Aceptar",
+    "addFileToQueue": "Añadir un fichero a la cola",
+    "back-text": "Atras",
     "file-manager.move_to": "Mover a",
     "file-manager.rename": "Renombrar",
     "file-manager.delete": "Eliminar",
@@ -74,7 +76,16 @@
     "inbox.subject": "Asunto",
     "inbox.choose_receiver": "Escribe un destinatario",
     "inbox.to": "Para",
-    "inbox.new_message": "Nuevo mensaje"
+    "inbox.new_message": "Nuevo mensaje",
+    "message.success": "Éxito",
+    "message.error": "Error",
+    "message.warning": "Atención",
+    "message.info": "Información",
+    "filemanager.copy.successfully": "Cortado con éxito",
+    "file-manager.paste": "Pegar",
+    "file-manager.copy": "Cortar",
+    "FiltersDropDownLabel": "Ver filtros",
+    "actions": "Acciones"
 
 }
 

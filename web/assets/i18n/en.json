@@ -42,14 +42,16 @@
     "fileDropZone": "Drop here to add",
     "fileSelect": "Select files zones",
     "fileUpload": "Upload",
-    "fileUploadAll": "Upload all",
+    "fileUploadAll": " Upload all",
     "fileCancel": "Cancel",
-    "fileCancelAll": "Cancel all",
+    "fileCancelAll": " Cancel all",
     "fileRemove": "Remove",
-    "fileRemoveAll": "Remove all",
+    "fileRemoveAll": " Remove all",
     "fileQueueProgress": "Queue progress:",
     "Confirmation": "Confirmation Needed",
     "Ok": "Ok",
+    "addFileToQueue": "add a file to the queue",
+    "back-text": "Back",
     "file-manager.move_to": "Move to",
     "file-manager.rename": "Rename",
     "file-manager.delete": "Delete",
@@ -74,7 +76,14 @@
     "inbox.subject": "Subject",
     "inbox.choose_receiver": "Write a receiver",
     "inbox.to": "To",
-    "inbox.new_message": "New message"
-
-
+    "inbox.new_message": "New message",
+    "message.success": "Success",
+    "message.error": "Error",
+    "message.warning": "Warning",
+    "message.info": "Info",
+    "filemanager.copy.successfully": "Successful cut",
+    "file-manager.paste": "Paste",
+    "file-manager.copy": "Cut",
+    "FiltersDropDownLabel": "Show filters",
+    "actions": "Actions"
 }

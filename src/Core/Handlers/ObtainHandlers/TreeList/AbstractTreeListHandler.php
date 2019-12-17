@@ -26,8 +26,7 @@ abstract class AbstractTreeListHandler extends Handler
      */
     public function handle($command): HandlerResponseInterface
     {
-        $this->getData($command);
-        return new SuccessHandlerResponse(HttpCodes::CODE_OK);
+        return new SuccessHandlerResponse(HttpCodes::CODE_OK, $this->getData($command));
     }
 
     /**
