@@ -85,5 +85,7 @@
     "file-manager.paste": "Paste",
     "file-manager.copy": "Cut",
     "FiltersDropDownLabel": "Show filters",
-    "actions": "Actions"
+    "actions": "Actions",
+    "no-data": "No data available",
+    "confirm-title": "Are you sure?"
 }

@@ -85,7 +85,10 @@
     "file-manager.paste": "Pegar",
     "file-manager.copy": "Cortar",
     "FiltersDropDownLabel": "Ver filtros",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "no-data": "No hay datos disponible",
+    "confirm-title": "Estás seguro?"
+
 
 }
 
