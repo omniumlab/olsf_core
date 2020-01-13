@@ -87,7 +87,9 @@
     "FiltersDropDownLabel": "Ver filtros",
     "actions": "Acciones",
     "no-data": "No hay datos disponible",
-    "confirm-title": "Estás seguro?"
+    "confirm-title": "Estás seguro?",
+    "location-error": "La localización es obligatoria. Actívala y actualiza la página."
+
 
 
 }

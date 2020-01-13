@@ -87,5 +87,6 @@
     "FiltersDropDownLabel": "Show filters",
     "actions": "Actions",
     "no-data": "No data available",
-    "confirm-title": "Are you sure?"
+    "confirm-title": "Are you sure?",
+    "location-error": "Location required. Enable it and reload the window"
 }
