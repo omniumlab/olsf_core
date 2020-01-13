@@ -43,6 +43,10 @@ interface EntityInterface
      */
     public function getEntityType(): EntityTypeInterface;
 
+    public function getGeolocation(): bool;
+
+    public function setGeolocation(bool $geolocation): EntityInterface;
+
     /**
      * @return \Core\Entities\Options\Action
      */

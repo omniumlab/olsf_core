@@ -24,6 +24,7 @@ abstract class AbstractEntity implements EntityInterface, ValueInterface
      * "restPrefixUrl" string
      * "method" string
      * "options" BaseEntityOptions
+     * "geolocation" bool
      */
     private $variables;
 
@@ -203,6 +204,17 @@ abstract class AbstractEntity implements EntityInterface, ValueInterface
         $this->setVariable("permissionName", $permission);
     }
 
+    public function getGeolocation(): bool
+    {
+        return $this->getVariable("geolocation");
+    }
+
+    public function setGeolocation(bool $geolocation): EntityInterface
+    {
+        $this->setVariable("geolocation", $geolocation);
+        return $this;
+    }
+
     public function setup(TextHandlerInterface $textHandler)
     {
 
@@ -219,5 +231,4 @@ abstract class AbstractEntity implements EntityInterface, ValueInterface
     {
         return $this->textHandler;
     }
-
 }
