@@ -13,6 +13,7 @@ class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptio
      * Variables
      *
      *  onlyId: bool
+     *  blocked: bool
      *  entities: array
      */
 
@@ -26,6 +27,12 @@ class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptio
     public function setOnlyId(bool $onlyId): TreeListEntityOptionsInterface
     {
         $this->setVariable("onlyId", $onlyId);
+        return $this;
+    }
+
+    function setBlocked(bool $blocked): TreeListEntityOptionsInterface
+    {
+        $this->setVariable("blocked", $blocked);
         return $this;
     }
 
