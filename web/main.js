@@ -1287,7 +1287,6 @@ var ActionButtonComponent = /** @class */ (function () {
     ActionButtonComponent.prototype.doAction = function () {
         this.action.ids = this.ids;
         this.action.setFiltersParams(this.entity_name);
-        window.webkit.messageHandlers.messageHandler.postMessage('Pass your data here...');
         this.action.doAction();
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
