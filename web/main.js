@@ -1287,6 +1287,7 @@ var ActionButtonComponent = /** @class */ (function () {
     ActionButtonComponent.prototype.doAction = function () {
         this.action.ids = this.ids;
         this.action.setFiltersParams(this.entity_name);
+        window.webkit.messageHandlers.messageHandler.postMessage('Pass your data here...');
         this.action.doAction();
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -7996,21 +7997,24 @@ var TreeListComponent = /** @class */ (function (_super) {
         _this.treeControl = new _angular_cdk_tree__WEBPACK_IMPORTED_MODULE_10__["NestedTreeControl"](function (node) { return node.children; });
         _this.dataSource = new _angular_material__WEBPACK_IMPORTED_MODULE_9__["MatTreeNestedDataSource"]();
         _this.checklistSelection = new _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_11__["SelectionModel"](true /* multiple */);
+        _this.subscriptions = [];
         _this.hasChild = function (_, node) { return !!node.children && node.children.length > 0; };
         _this.getLevel = function (node) { return node.level; };
         _this.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.restService.globalRequestParams, _this.urlReplacements);
-        _this.activatedRoute.params.subscribe(function (params) {
-            if (typeof _this.urlReplacements === 'undefined') {
-                _this.urlReplacements = {};
-            }
-            _this.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, params, _this.urlReplacements);
-        });
-        _this.activatedRoute.queryParams.subscribe(function (params) {
-            if (typeof _this.urlReplacements === 'undefined') {
-                _this.urlReplacements = {};
-            }
-            _this.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, params, _this.urlReplacements);
-        });
+        _this.subscriptions = [
+            _this.activatedRoute.params.subscribe(function (params) {
+                if (typeof _this.urlReplacements === 'undefined') {
+                    _this.urlReplacements = {};
+                }
+                _this.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, params, _this.urlReplacements);
+            }),
+            _this.activatedRoute.queryParams.subscribe(function (params) {
+                if (typeof _this.urlReplacements === 'undefined') {
+                    _this.urlReplacements = {};
+                }
+                _this.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, params, _this.urlReplacements);
+            })
+        ];
         return _this;
     }
     TreeListComponent.prototype.ngOnInit = function () {
@@ -8076,9 +8080,10 @@ var TreeListComponent = /** @class */ (function (_super) {
     };
     TreeListComponent.prototype.initTree = function () {
         var _this = this;
+        console.log(this.urlReplacements);
         var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_6__["RequestBase"](this.entity.getRestUrl(this.urlReplacements), 'GET', this.serviceholder);
         request.url.geolocation = this.entity.geolocation;
-        request.execute().subscribe(function (it) {
+        this.subscriptions.push(request.execute().subscribe(function (it) {
             _this.bodyAttributesSetter.loadingVisible = false;
             _this.setLevels(it.data, 0);
             _this.dataSource.data = it.data;
@@ -8087,7 +8092,7 @@ var TreeListComponent = /** @class */ (function (_super) {
         }, function (e) {
         }, function () {
             _this.bodyAttributesSetter.loadingVisible = false;
-        });
+        }));
     };
     TreeListComponent.prototype.setSelected = function (data) {
         var _this = this;
@@ -8333,6 +8338,11 @@ var TreeListComponent = /** @class */ (function (_super) {
                 data.selected = value;
             }
             _this.changeSelected(data.children, node, value);
+        });
+    };
+    TreeListComponent.prototype.ngOnDestroy = function () {
+        this.subscriptions.forEach(function (it) {
+            it.unsubscribe();
         });
     };
     TreeListComponent.ctorParameters = function () { return [
@@ -15602,10 +15612,6 @@ var LocationService = /** @class */ (function () {
             console.error('An error occurred:', error.error.message);
         }
         else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            console.error("Backend returned code " + error.status + ", " +
-                ("body was: " + error.error));
         }
         // return an observable with a user-facing error message
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])('Something bad happened; please try again later.');
