@@ -14,6 +14,7 @@ class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptio
      *
      *  onlyId: bool
      *  blocked: bool
+     *  expanded: bool
      *  entities: array
      */
 
@@ -36,11 +37,18 @@ class TreeListEntityOptions extends EntityOptions implements TreeListEntityOptio
         return $this;
     }
 
+    function setExpanded(bool $expanded): TreeListEntityOptionsInterface
+    {
+        $this->setVariable("expanded", $expanded);
+        return $this;
+    }
+
     public function setEntities(array $entities): TreeListEntityOptionsInterface
     {
         $this->setVariable("entities", $entities);
         return $this;
     }
+
 
     public function addEntity(string $visualName, string $entityName, ?string $actionStyle = ActionInterface::STYLE_SUCCESS): TreeListEntityOptionsInterface
     {

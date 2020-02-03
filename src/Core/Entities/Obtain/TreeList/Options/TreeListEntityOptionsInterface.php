@@ -12,6 +12,8 @@ interface TreeListEntityOptionsInterface
 
     function setBlocked(bool $blocked): TreeListEntityOptionsInterface;
 
+    function setExpanded(bool $expanded): TreeListEntityOptionsInterface;
+
     function setEntities(array $entities): TreeListEntityOptionsInterface;
 
     function addEntity(string $visualName, string $entityName, ?string $actionStyle = ActionInterface::STYLE_SUCCESS): TreeListEntityOptionsInterface;

@@ -17,6 +17,7 @@ class TreeValue implements ValueInterface
      * "arguments" ?[string => string]
      * "selectable" ?bool
      * "spreadable" ?bool
+     * "expanded" ?bool
      * "children" TreeValue[]
      */
     private $variables;
@@ -63,6 +64,15 @@ class TreeValue implements ValueInterface
             return $this;
 
         $this->variables->setValue($spreadable, "spreadable");
+        return $this;
+    }
+
+    public function setExpanded(?bool $expanded): TreeValue
+    {
+        if ($expanded === null)
+            return $this;
+
+        $this->variables->setValue($expanded, "expanded");
         return $this;
     }
 
