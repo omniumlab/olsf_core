@@ -2729,6 +2729,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _model_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../model/item */ "./src/app/model/item.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _base_entity_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../base-entity.component */ "./src/app/components/base-entity.component.ts");
+/* harmony import */ var _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/rest/requests/request-base */ "./src/app/services/rest/requests/request-base.ts");
+
 
 
 
@@ -2789,14 +2791,36 @@ var FormComponent = /** @class */ (function (_super) {
                 }
                 if (_this.entity.data.saveEntityUrl !== undefined) {
                     _this.entity.getServiceHolder().entitiesFinder.findEntityByName(_this.entity.data.saveEntityUrl)
-                        .subscribe(function (value) { return _this.entity.getServiceHolder()
-                        .router.navigate([value.getActionUrl({ id: response.data[Object.keys(response.data)[0]] }).path]); });
+                        .subscribe(function (value) {
+                        value.getRestUrl() ? _this.doAjax(value, response, true) : _this.doRedirect(value);
+                    });
                 }
                 else {
                     _this.location.back();
                 }
             }
         }, function (error) { return _this.buttonDisable = false; });
+    };
+    FormComponent.prototype.doRedirect = function (value) {
+        var url = value.getVisualUrl();
+        url.queryParams = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, url.queryParams, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams);
+        this.entity.getServiceHolder().router.navigateByUrl(url.path);
+    };
+    FormComponent.prototype.doAjax = function (value, response, still) {
+        var _this = this;
+        if (still === void 0) { still = false; }
+        this.onOk = value.getMethodOnActionOk(this).bind(this);
+        var url = value.getRestUrl({ id: response.data[Object.keys(response.data)[0]] });
+        url.queryParams = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams, response.data);
+        url.params = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.activatedRoute.snapshot.params, this.activatedRoute.snapshot.queryParams, response.data);
+        var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_4__["RequestBase"](url, value.restMethod, this.entity.getServiceHolder());
+        request.addRequestValues(this.entity.urlParams);
+        request.type = value.restMethod;
+        request.execute().subscribe(function (response2) {
+            if (response2.isSuccess()) {
+                _this.onOk(response2);
+            }
+        });
     };
     FormComponent.prototype.uploadFiles = function (response) {
         var _this = this;
@@ -2820,11 +2844,25 @@ var FormComponent = /** @class */ (function (_super) {
             _this.buttonDisable = false;
             if (response.isSuccess()) {
                 _this.uploadFiles(response);
-                _this.item.resetValues();
+                if (response.data.saveEntityUrl !== undefined) {
+                    _this.entity.data.saveEntityUrl = response.data.saveEntityUrl;
+                }
+                if (_this.entity.data.saveEntityUrl !== undefined) {
+                    _this.entity.getServiceHolder().entitiesFinder.findEntityByName(_this.entity.data.saveEntityUrl)
+                        .subscribe(function (value) {
+                        value.getRestUrl() ? _this.doAjax(value, response, true) : _this.doRedirect(value);
+                    });
+                }
+                else {
+                    _this.item.resetValues();
+                }
             }
         }, function (error) { return _this.buttonDisable = false; }, function () {
             return _this.buttonDisable = false;
         });
+    };
+    FormComponent.prototype.downloadFile = function (filename, fileurl, mimetype) {
+        this.entity.getServiceHolder().restService.downloadFile(fileurl, filename, mimetype);
     };
     return FormComponent;
 }(_base_entity_component__WEBPACK_IMPORTED_MODULE_3__["BaseEntityComponent"]));
