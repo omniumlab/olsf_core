@@ -54,10 +54,13 @@ abstract class AbstractLangHandler extends Handler
         $this->setup();
         $config = [
             "default_lang" => $this->container->getParameter("default_lang"),
+            "request_location" => (int) $this->isRequiredLocation()
         ];
 
         return new SuccessHandlerResponse(200, $config);
     }
+
+    abstract function isRequiredLocation(): bool;
 
 
     protected function getApiUrlPrefix()

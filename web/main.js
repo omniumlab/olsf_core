@@ -15613,10 +15613,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-
-
 
 
 
@@ -15649,21 +15645,6 @@ var LocationService = /** @class */ (function () {
                 resolve({ lng: null, lat: null });
             }
         });
-    };
-    LocationService.prototype.getIpAddress = function () {
-        return this.http
-            .get('https://api.ipify.org/?format=json')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
-    };
-    LocationService.prototype.handleError = function (error) {
-        if (error.error instanceof ErrorEvent) {
-            // A client-side or network error occurred. Handle it accordingly.
-            console.error('An error occurred:', error.error.message);
-        }
-        else {
-        }
-        // return an observable with a user-facing error message
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])('Something bad happened; please try again later.');
     };
     LocationService.ctorParameters = function () { return [
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
@@ -16754,34 +16735,29 @@ var RequestBase = /** @class */ (function () {
                         observer.complete();
                     }
                 }).finally(function () {
-                    _this.serviceHolder.locationService.getIpAddress().toPromise().then(function (ip) {
-                        RequestBase.addGlobalHeaders({ 'ip': ip['ip'].toString() });
-                    }, function (onreject) {
-                    }).finally(function () {
-                        if (!error) {
-                            _this.serviceHolder.restService.execute(_this).subscribe(function (result) {
-                                _this.lastResponse = _this.createResponse(result);
-                                _this.error = false;
-                                if (_this.lastResponse.shouldShowMessage()) {
-                                    _this.lastResponse.showMessage();
-                                }
-                                if (_this.shouldDoRedirect(result)) {
-                                    _this.doRedirect(result.redirect);
-                                }
-                                else {
-                                    observer.next(_this.lastResponse);
-                                }
-                                observer.complete();
-                            }, function (errorData) {
-                                _this.lastResponse = new _model_remote_responses_rest_response__WEBPACK_IMPORTED_MODULE_4__["RestResponse"](errorData, _this.serviceHolder);
-                                _this.error = true;
-                                if (_this.lastResponse.shouldShowMessage()) {
-                                    _this.lastResponse.showMessage();
-                                }
-                                observer.error(_this.lastResponse);
-                            });
-                        }
-                    });
+                    if (!error) {
+                        _this.serviceHolder.restService.execute(_this).subscribe(function (result) {
+                            _this.lastResponse = _this.createResponse(result);
+                            _this.error = false;
+                            if (_this.lastResponse.shouldShowMessage()) {
+                                _this.lastResponse.showMessage();
+                            }
+                            if (_this.shouldDoRedirect(result)) {
+                                _this.doRedirect(result.redirect);
+                            }
+                            else {
+                                observer.next(_this.lastResponse);
+                            }
+                            observer.complete();
+                        }, function (errorData) {
+                            _this.lastResponse = new _model_remote_responses_rest_response__WEBPACK_IMPORTED_MODULE_4__["RestResponse"](errorData, _this.serviceHolder);
+                            _this.error = true;
+                            if (_this.lastResponse.shouldShowMessage()) {
+                                _this.lastResponse.showMessage();
+                            }
+                            observer.error(_this.lastResponse);
+                        });
+                    }
                 });
             }
         });
