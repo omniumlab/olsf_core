@@ -16,6 +16,11 @@ use Stripe\ApiResponse;
 interface StripeInterface
 {
 
-    function charge(string $token, string $email, float $amount, ?string $currency = "EUR"):string;
-    function refund($id):string;
+    function charge(string $customerID, float $amount, ?string $currency = "EUR"): string;
+
+    function refund($id): string;
+    function createCustomer($email,$cardId): string;
+    function updateCardCustomer($customerId, $cardId): string;
+
+    function getCardIfo($token): object;
 }

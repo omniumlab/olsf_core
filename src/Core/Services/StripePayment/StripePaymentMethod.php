@@ -29,18 +29,15 @@ class StripePaymentMethod implements StripeInterface
     A payout will be pending until it is submitted to the bank, at which point it becomes in_transit.
     It will then change to paid if the transaction goes through.
     If it does not go through successfully, its status will change to failed or canceled.*/
-    function charge(string $token, string $email, float $amount, ?string $currency = "EUR"): string
+    function charge(string $customerID, float $amount, ?string $currency = "EUR"): string
     {
-        $customer = \Stripe\Customer::create([
-            'email' => $email,
-            'source' => $token,
-        ]);
+
         $charge = Charge::create([
-            'customer' => $customer->id,
+            'customer' => $customerID,
             'amount' => $amount,
             'currency' => $currency,
         ]);
-        if ($charge instanceof Charge)
+        if ($charge instanceof Charge && $charge->status === "succeeded")
             return $charge->id;
 
         return "";
@@ -57,6 +54,45 @@ class StripePaymentMethod implements StripeInterface
 
 
         return $refund->getLastResponse()->code;
+    }
+
+
+    function getCardIfo($token): object
+    {
+
+        $info = \Stripe\Customer::allSources(
+            $token
+        );
+        return $info->getLastResponse();
+    }
+
+    function createCustomer($email, $cardId): string
+    {
+        $customer = \Stripe\Customer::create([
+            'email' => $email,
+            'source' => $cardId,
+        ]);
+        return $customer->id;
+    }
+
+    function updateCardCustomer($customerId, $cardId): string
+    {
+        if ($cardId) {
+            $customer = \Stripe\Customer::createSource(
+                $customerId,
+                [
+                    'source' =>$cardId,
+                ]
+            );
+        } else {
+            $cardId = $this->getCardIfo($customerId)->json["data"][0]["id"];
+            $customer = \Stripe\Customer::deleteSource(
+                $customerId,
+                $cardId
+            );
+        }
+
+        return $customer->id;
     }
 }
 
