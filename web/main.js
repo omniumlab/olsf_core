@@ -6043,8 +6043,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_rest_request_service_holder__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../services/rest/request-service-holder */ "./src/app/services/rest/request-service-holder.ts");
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 /* harmony import */ var _services_cookies_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../services/cookies.service */ "./src/app/services/cookies.service.ts");
-/* harmony import */ var _services_location_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../services/location.service */ "./src/app/services/location.service.ts");
-
 
 
 
@@ -6071,13 +6069,12 @@ var LoginSection;
     LoginSection[LoginSection["LOADING"] = 3] = "LOADING";
 })(LoginSection || (LoginSection = {}));
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(bodyClassesSetter, router, auth, route, routesCreator, serviceHolder, locationService, cookieservice, translateService) {
+    function LoginComponent(bodyClassesSetter, router, auth, route, routesCreator, serviceHolder, cookieservice, translateService) {
         this.router = router;
         this.auth = auth;
         this.route = route;
         this.routesCreator = routesCreator;
         this.serviceHolder = serviceHolder;
-        this.locationService = locationService;
         this.cookieservice = cookieservice;
         this.translateService = translateService;
         this.bodyClasses = 'login';
@@ -6286,7 +6283,6 @@ var LoginComponent = /** @class */ (function () {
             _this.translateService.setDefaultLang(response.data.default_lang);
             _this.translateService.use(response.data.default_lang);
             _this.cookieservice.setCookie('lang', response.data.default_lang);
-            _this.locationService.askLocation = response.data.request_location ? response.data.request_location : false;
             _this.showLogin();
         }, function () { return _this.showLogin(); });
     };
@@ -6297,7 +6293,6 @@ var LoginComponent = /** @class */ (function () {
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
         { type: _services_entities_routes_entities_creator__WEBPACK_IMPORTED_MODULE_11__["RoutesEntitiesCreator"] },
         { type: _services_rest_request_service_holder__WEBPACK_IMPORTED_MODULE_12__["RequestServiceHolder"] },
-        { type: _services_location_service__WEBPACK_IMPORTED_MODULE_15__["LocationService"] },
         { type: _services_cookies_service__WEBPACK_IMPORTED_MODULE_14__["CookiesService"] },
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__["TranslateService"] }
     ]; };
@@ -6311,7 +6306,7 @@ var LoginComponent = /** @class */ (function () {
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../css/custom.less */ "./src/app/css/custom.less")).default, tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../css/login.css */ "./src/app/css/login.css")).default, tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../css/custom_responsive.less */ "./src/app/css/custom_responsive.less")).default]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_body_attributes_setter_service__WEBPACK_IMPORTED_MODULE_9__["BodyAttributesSetter"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
-            _services_entities_routes_entities_creator__WEBPACK_IMPORTED_MODULE_11__["RoutesEntitiesCreator"], _services_rest_request_service_holder__WEBPACK_IMPORTED_MODULE_12__["RequestServiceHolder"], _services_location_service__WEBPACK_IMPORTED_MODULE_15__["LocationService"],
+            _services_entities_routes_entities_creator__WEBPACK_IMPORTED_MODULE_11__["RoutesEntitiesCreator"], _services_rest_request_service_holder__WEBPACK_IMPORTED_MODULE_12__["RequestServiceHolder"],
             _services_cookies_service__WEBPACK_IMPORTED_MODULE_14__["CookiesService"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__["TranslateService"]])
     ], LoginComponent);
     return LoginComponent;
@@ -15494,6 +15489,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _rest_requests_config_request__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./rest/requests/config-request */ "./src/app/services/rest/requests/config-request.ts");
 /* harmony import */ var _rest_rest_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./rest/rest.service */ "./src/app/services/rest/rest.service.ts");
 /* harmony import */ var _model_remote_responses_structures_data_config_config_style__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../model/remote/responses/structures/data/config/config-style */ "./src/app/model/remote/responses/structures/data/config/config-style.ts");
+/* harmony import */ var _location_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./location.service */ "./src/app/services/location.service.ts");
 /**
  * Created by angro on 09/05/2017.
  */
@@ -15504,10 +15500,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var GeneralConfigService = /** @class */ (function () {
-    function GeneralConfigService(request, restService) {
+    function GeneralConfigService(request, restService, locationService) {
         this.request = request;
         this.restService = restService;
+        this.locationService = locationService;
         this._entities = [];
     }
     Object.defineProperty(GeneralConfigService.prototype, "config", {
@@ -15521,6 +15519,7 @@ var GeneralConfigService = /** @class */ (function () {
                 else {
                     _this.request.execute().subscribe(function (response) {
                         _this.configData = response.data;
+                        _this.locationService.askLocation = response.data.request_location ? response.data.request_location : false;
                         observer.next(_this._configData);
                         observer.complete();
                     }, function (error) { return observer.error(error); });
@@ -15587,11 +15586,12 @@ var GeneralConfigService = /** @class */ (function () {
     });
     GeneralConfigService.ctorParameters = function () { return [
         { type: _rest_requests_config_request__WEBPACK_IMPORTED_MODULE_4__["ConfigRequest"] },
-        { type: _rest_rest_service__WEBPACK_IMPORTED_MODULE_5__["RestService"] }
+        { type: _rest_rest_service__WEBPACK_IMPORTED_MODULE_5__["RestService"] },
+        { type: _location_service__WEBPACK_IMPORTED_MODULE_7__["LocationService"] }
     ]; };
     GeneralConfigService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_rest_requests_config_request__WEBPACK_IMPORTED_MODULE_4__["ConfigRequest"], _rest_rest_service__WEBPACK_IMPORTED_MODULE_5__["RestService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_rest_requests_config_request__WEBPACK_IMPORTED_MODULE_4__["ConfigRequest"], _rest_rest_service__WEBPACK_IMPORTED_MODULE_5__["RestService"], _location_service__WEBPACK_IMPORTED_MODULE_7__["LocationService"]])
     ], GeneralConfigService);
     return GeneralConfigService;
 }());
