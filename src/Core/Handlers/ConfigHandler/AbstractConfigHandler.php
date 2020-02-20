@@ -115,7 +115,8 @@ abstract class AbstractConfigHandler extends Handler
             "restPrefixUrl" => $this->getApiUrlPrefix(),
             "entities" => $entities->getValues(),
             "menu" => $menu,
-            "available_lang" => $this->globalConfig->getAvailableLang()
+            "available_lang" => $this->globalConfig->getAvailableLang(),
+            "request_location" => (int) $this->isRequiredLocation()
         ];
 
         return new SuccessHandlerResponse(200, $config);
@@ -145,6 +146,8 @@ abstract class AbstractConfigHandler extends Handler
 
     abstract function configMenu(array &$existentMenu);
 
+    abstract function isRequiredLocation();
+
     protected function getApiUrlPrefix()
     {
         return $this->apiUrlPrefix;
@@ -164,4 +167,6 @@ abstract class AbstractConfigHandler extends Handler
     {
         return $this->resourcesFinder;
     }
+
+
 }
