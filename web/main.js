@@ -7633,6 +7633,7 @@ var TableComponent = /** @class */ (function (_super) {
         _this._allSelected = false;
         _this.refreshable = true;
         _this.urlReplacements = {};
+        _this._currentPage = 1;
         _this.dtOptions = {
             responsive: {
                 details: {
@@ -7717,6 +7718,7 @@ var TableComponent = /** @class */ (function (_super) {
     TableComponent.prototype.updatePage = function () {
         var e_1, _a, e_2, _b;
         var _this = this;
+        this.selectedIds = [];
         if (!this._headerLoaded) {
             return;
         }
@@ -7755,6 +7757,12 @@ var TableComponent = /** @class */ (function (_super) {
             _this.items = response.rows;
             _this.totalRows = response.data.total;
             _this.summaryItems = response.data.summary;
+            if (_this.currentPage !== 1 && _this.totalRows <= (_this.currentPage - 1) * _this.entity.request.limit) {
+                _this.currentPage = _this.currentPage - 1;
+            }
+            else if (_this._currentPage && _this._currentPage !== 1 && _this.totalRows <= (_this._currentPage - 1) * _this.entity.request.limit) {
+                _this.currentPage = _this._currentPage - 1;
+            }
             _this.onPageUpdated();
         });
     };
