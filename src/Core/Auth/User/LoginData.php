@@ -116,12 +116,14 @@ class LoginData implements LoginDataInterface
         $this->badLoginAttempts = $unixTimes;
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password, bool $encrypt = false)
     {
-        $info = password_get_info($password);
+        if($encrypt){
+            $info = password_get_info($password);
 
-        if ($info["algo"] !== PASSWORD_DEFAULT) {
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            if ($info["algo"] !== PASSWORD_DEFAULT) {
+                $password = password_hash($password, PASSWORD_DEFAULT);
+            }
         }
 
         $this->password = $password;

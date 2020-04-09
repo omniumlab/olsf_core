@@ -49,8 +49,9 @@ interface LoginDataInterface
 
     /**
      * @param string $password
+     * @param bool $encrypt
      */
-    public function setPassword(string $password);
+    public function setPassword(string $password, bool $encrypt = false);
 
     public function setLoginName(string $loginName);
 }
