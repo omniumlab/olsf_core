@@ -30,11 +30,11 @@ class NativePushSender implements PushSenderInterface
         $this->apnPass = $config->getApnsPass();
     }
 
-    function send(string $token, string $message, int $os, ?string $title = null, ?string $image = null)
+    function send(string $token, string $message, int $os, ?string $title = null, ?string $image = null, ?array $data = null)
     {
         switch ($os){
             case PushSenderInterface::OS_ANDROID:
-                $this->sendAndroidNotification($token, $message, $title, $image);
+                $this->sendAndroidNotification($token, $message, $title, $image, $data);
                 break;
             case PushSenderInterface::OS_IOS:
                 $this->sendAppleNotification($token, $message, $title);
@@ -42,7 +42,7 @@ class NativePushSender implements PushSenderInterface
         }
     }
 
-    private function sendAndroidNotification(string $token, string $message, ?string $title = null, ?string $image = null)
+    private function sendAndroidNotification(string $token, string $message, ?string $title = null, ?string $image = null, ?array $data = null)
     {
         $path_to_firebase_cm = 'https://fcm.googleapis.com/fcm/send';
 
@@ -57,6 +57,10 @@ class NativePushSender implements PushSenderInterface
             'priority' => 10,
             'notification' => $notification
         );
+
+        if ($data !== null)
+            $fields["data"] = $data;
+
         $headers = array(
             'Authorization:key=' . $this->fcmKey,
             'Content-Type:application/json'

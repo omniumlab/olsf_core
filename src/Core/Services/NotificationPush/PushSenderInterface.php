@@ -14,5 +14,5 @@ interface PushSenderInterface
     const OS_ANDROID = 1;
     const OS_IOS = 2;
 
-    function send(string $token, string $message, int $os, ?string $title = null);
+    function send(string $token, string $message, int $os, ?string $title = null, ?string $image = null, ?array $data = null);
 }
