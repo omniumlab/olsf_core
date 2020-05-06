@@ -21,7 +21,7 @@ class PropelColumnTypeFormatter implements ColumnTypeFormatterInterface
      */
     public function getBddTypeFormatted($bddType)
     {
-        switch ($bddType){
+        switch ($bddType) {
             case PropelTypes::LONGVARCHAR:
                 $type = HandlerInterface::TYPE_TEXTAREA;
                 break;
@@ -40,6 +40,7 @@ class PropelColumnTypeFormatter implements ColumnTypeFormatterInterface
             case PropelTypes::TIME:
                 $type = HandlerInterface::TYPE_TIME;
                 break;
+            case 'canvas':
             case "image":
             case "file":
                 $type = $bddType;
