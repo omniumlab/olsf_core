@@ -28,9 +28,9 @@ class DeleteMultipleEntity extends AbstractEntity
         parent::__construct($handler, new DeleteMultipleType(), $textHandler);
 
         $this->getAction()
-             ->setIcon("fa-trash")
-             ->setOnlyIcon(false)
-             ->setAskMessage("Are you sure you want to delete this item?")
-             ->setStyle(ActionInterface::STYLE_DANGER);
+            ->setIcon("fa-trash")
+            ->setOnlyIcon(false)
+            ->setAskMessage($textHandler->get("delete_text"))
+            ->setStyle(ActionInterface::STYLE_DANGER);
     }
 }

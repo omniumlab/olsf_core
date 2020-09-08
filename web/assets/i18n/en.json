@@ -88,5 +88,9 @@
     "actions": "Actions",
     "no-data": "No data available",
     "confirm-title": "Are you sure?",
-    "location-error": "Location required. Enable it and reload the window"
+    "location-error": "Location required. Enable it and reload the window",
+    "login.component.repeat_password": "Repeat password",
+    "login.component.password": "Password",
+    "login.component.username": "Username"
+
 }

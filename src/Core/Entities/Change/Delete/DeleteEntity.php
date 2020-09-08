@@ -28,6 +28,6 @@ class DeleteEntity extends AbstractEntity
         $this->getAction()
              ->setIcon("fa-trash")
              ->setOnlyIcon(true)
-             ->setAskMessage("Are you sure you want to delete this item?");
+             ->setAskMessage($textHandler->get("delete_text"));
     }
 }

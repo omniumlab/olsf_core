@@ -9,4 +9,5 @@ parameters:
   failure_parent_field: You have to set 'parentField' before setting idParent.
   list_translation_filter_tables: Selector de Tabla
   list_translation_filter_column_name: Nombre
+  delete_text: ¿Estás seguro de eliminar este objeto?
   failed_login_attempts_exceeded_exception: Has introducido la contraseña incorrectamente demasiadas veces. Vuelve a intentarlo en 30 minutos.

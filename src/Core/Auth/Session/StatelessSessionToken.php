@@ -9,7 +9,9 @@
 namespace Core\Auth\Session;
 
 
+use Core\Exceptions\PermissionDeniedException;
 use Core\Exceptions\SessionExpiredException;
+use DateTime;
 
 class StatelessSessionToken implements SessionTokenInterface
 {
@@ -103,12 +105,10 @@ class StatelessSessionToken implements SessionTokenInterface
     public function check($key)
     {
         $data = $this->createTokenData($key);
-
-        $this->correct = hash_equals($data["signature"], $this->signature);
-
-        if ($this->correct && $this->getExpirationDate() < new \DateTime()) {
-            $this->correct = false;
-
+        if (!hash_equals($data["signature"], $this->signature)) {
+            throw new PermissionDeniedException();
+        }
+        if ($this->getExpirationDate() < new DateTime()) {
             throw new SessionExpiredException();
         }
     }
