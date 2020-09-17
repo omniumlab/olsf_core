@@ -15858,25 +15858,6 @@ var MessageConfirm = /** @class */ (function (_super) {
         _this.options.stack = {
             dir1: 'down', modal: true, firstpos1: 25
         };
-        _this.options.modules.Confirm.buttons =
-            [
-                {
-                    text: oklabel,
-                    primary: true,
-                    promptTrigger: true,
-                    click: function (notice, value) {
-                        notice.close();
-                        notice.fire('pnotify:confirm', { notice: notice, value: value });
-                    }
-                },
-                {
-                    text: cancellabel,
-                    click: function (notice) {
-                        notice.close();
-                        notice.fire('pnotify:cancel', { notice: notice });
-                    }
-                }
-            ];
         return _this;
     }
     MessageConfirm.prototype.show = function () {
