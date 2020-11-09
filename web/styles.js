@@ -338,7 +338,7 @@ if (content.locals) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\Proyectos\Omnium\SourceCode\Framework Omnium\FrondendProduccion\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\angular\src\styles.css */"./src/styles.css");
 
 
 /***/ })
