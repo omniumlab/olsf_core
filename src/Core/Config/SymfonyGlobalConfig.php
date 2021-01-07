@@ -211,6 +211,18 @@ class SymfonyGlobalConfig implements GlobalConfigInterface, ReflectionConfigInte
     public function getHttp(): string
     {
         return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-            || $_SERVER['SERVER_PORT'] == 443 ? "https" : "http";
+        || $_SERVER['SERVER_PORT'] == 443 ? "https" : "http";
+    }
+
+    public function getOneSignalToken(): string
+    {
+        return $this->container->getParameter("one_signal_token");
+
+    }
+
+    public function getOneSignalAppId(): string
+    {
+        return $this->container->getParameter("one_signal_app_id");
+
     }
 }

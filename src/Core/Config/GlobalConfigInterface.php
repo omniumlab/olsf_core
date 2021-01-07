@@ -24,6 +24,8 @@ interface GlobalConfigInterface
     public function getApnsPass(): string;
 
     public function getFCMKey(): string;
+    public function getOneSignalToken(): string;
+    public function getOneSignalAppId(): string;
 
     public function getMailerFromEmail(): string;
 

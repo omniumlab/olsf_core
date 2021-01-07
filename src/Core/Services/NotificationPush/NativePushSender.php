@@ -22,12 +22,18 @@ class NativePushSender implements PushSenderInterface
 
     /** @var null|string  */
     private $apnPass;
+    /** @var null|string  */
+    private $oneSignalToken;
+    /** @var null|string */
+    private $oneSignalAppId;
 
     function __construct(GlobalConfigInterface $config, RootDirObtainerInterface $rootDirObtainer)
     {
         $this->pemCertificate = $rootDirObtainer->getRootDir() . "/private/app/config/push/ck_" . $config->getEnvironment() . ".pem";
         $this->fcmKey = $config->getFCMKey();
         $this->apnPass = $config->getApnsPass();
+        $this->oneSignalToken = $config->getOneSignalToken();
+        $this->oneSignalAppId = $config->getOneSignalAppId();
     }
 
     function send(string $token, string $message, int $os, ?string $title = null, ?string $image = null, ?array $data = null)
@@ -99,5 +105,27 @@ class NativePushSender implements PushSenderInterface
         $apnsMessage = chr(0) . chr(0) . chr(32) . $token . chr(0) . chr(strlen($output)) . $output;
         fwrite($apns, $apnsMessage);
         fclose($apns);
+    }
+
+    function sendOneSignal(array $userTokens, array $content)
+    {
+        $fields = array(
+            'app_id' => $this->oneSignalAppId,
+            'include_player_ids' =>$userTokens,
+            'contents' => $content
+        );
+
+        $fields = json_encode($fields);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8' , 'Authorization: Basic '.$this->oneSignalToken));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
     }
 }
