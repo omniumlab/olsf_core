@@ -4779,6 +4779,7 @@ var NotificationsComponent = /** @class */ (function () {
         this.configService = configService;
         this.serviceHolder = serviceHolder;
         this.pushNotification = pushNotification;
+        this.notifications = [];
         this._badgeVisible = true;
         this.badgeVisibleChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.countChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
@@ -4819,7 +4820,7 @@ var NotificationsComponent = /** @class */ (function () {
         this.request.clear();
         this.request.execute().subscribe(function (response) {
             var notificationsData = response.data;
-            if (!_this.notifications || _this.notifications.length < notificationsData.notifications.length) {
+            if (_this.notifications && _this.notifications.length < (notificationsData.notifications ? notificationsData.notifications.length : 0)) {
                 new Audio('assets/notifications.mp3').play();
                 _this.pushNotification.show(notificationsData.notifications[notificationsData.notifications.length - 1].title, { icon: 'assets/logo.png' }, 30);
             }
