@@ -90,6 +90,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as XlsxWriter;
 
@@ -110,6 +111,10 @@ class PhpSpreadSheetRepository implements SpreadSheetRepositoryInterface
      * @var XlsxWriter
      */
     private $writer;
+    /**
+     * @var Mpdf
+     */
+    private $writerPDf;
     /**
      * @var XlsxReader
      */
@@ -152,6 +157,23 @@ class PhpSpreadSheetRepository implements SpreadSheetRepositoryInterface
         $this->writer->save($path . $fileTitle . ".xlsx");
         return $this;
     }
+    function saveFilePDF(SpreadSheetInterface $spreadSheet, string $fileTitle, ?string $path = null): SpreadSheetRepositoryInterface
+    {
+        $this->mSpreadSheet = $spreadSheet;
+        $this->createPhpSpreadSheet();
+
+        if ($path === null) {
+            $path = $this->getRootPath();
+        }
+
+        $directory = rtrim($path, '/');
+        if (!file_exists($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $this->writerPDf->save($path . $fileTitle . ".pdf");
+        return $this;
+    }
 
 
     private function getRootPath()
@@ -164,6 +186,7 @@ class PhpSpreadSheetRepository implements SpreadSheetRepositoryInterface
         $this->phpSpreadSheet = new Spreadsheet();
         $this->phpSpreadSheet->removeSheetByIndex(0);
         $this->writer = new XlsxWriter($this->phpSpreadSheet);
+        $this->writerPDf = new Mpdf($this->phpSpreadSheet);
 
         $this->addSheetsToPhpSpreadSheet();
     }

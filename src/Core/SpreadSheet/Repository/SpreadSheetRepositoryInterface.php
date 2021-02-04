@@ -20,6 +20,7 @@ interface SpreadSheetRepositoryInterface
      * @return SpreadSheetRepositoryInterface
      */
     function saveFile(SpreadSheetInterface $spreadSheet, string $fileTitle, ?string $path = null): SpreadSheetRepositoryInterface;
+    function saveFilePDF(SpreadSheetInterface $spreadSheet, string $fileTitle, ?string $path = null): SpreadSheetRepositoryInterface;
 
     /**
      * @param string|null $pathAndFileName
