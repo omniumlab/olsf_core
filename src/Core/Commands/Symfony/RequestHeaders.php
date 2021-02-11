@@ -48,4 +48,14 @@ class RequestHeaders implements RequestHeadersInterface
         return $this->request->headers->get($name);
     }
 
+    /**
+     * @param string $name
+     *
+     * @return array|string
+     */
+    public function setHeaderValue(string $name, $value)
+    {
+        return $this->request->headers->set($name, $value);
+    }
+
 }

@@ -17,4 +17,6 @@ interface RequestHeadersInterface
      * @return array|string
      */
     public function getHeaderValue(string $name);
+    public function setHeaderValue(string $name, $value);
+
 }
