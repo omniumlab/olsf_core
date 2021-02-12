@@ -6679,19 +6679,15 @@ var MapComponent = /** @class */ (function (_super) {
     }
     MapComponent.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _a, _b;
             var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        this.screenWidth = window.innerWidth;
-                        this.screenHeight = window.innerHeight;
-                        _a = this.entity;
-                        _b = [{}];
-                        return [4 /*yield*/, this.activatedRoute.params];
-                    case 1:
-                        _a.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"].apply(void 0, _b.concat([_c.sent(), this.entity.urlReplacements, this.activatedRoute.queryParams]));
-                        this.entity.requestData.subscribe(function (result) {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                this.screenWidth = window.innerWidth;
+                this.screenHeight = window.innerHeight;
+                this.activatedRoute.params.subscribe(function (it) {
+                    _this.entity.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.entity.urlReplacements, it);
+                    _this.activatedRoute.queryParams.subscribe(function (it2) {
+                        _this.entity.urlReplacements = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.entity.urlReplacements, it2);
+                        _this.entity.requestData.subscribe(function (result) {
                             _this.center = result.center;
                             _this.markers = result.markers;
                             _this.zoom = result.zoom;
@@ -6709,8 +6705,9 @@ var MapComponent = /** @class */ (function (_super) {
                                 }); }, _this.timeout);
                             }
                         });
-                        return [2 /*return*/];
-                }
+                    });
+                });
+                return [2 /*return*/];
             });
         });
     };
@@ -12280,8 +12277,9 @@ var EntityMap = /** @class */ (function (_super) {
         get: function () {
             var _this = this;
             return new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"](function (observer) {
-                console.log(JSON.stringify(_this.getRestUrl(_this.urlReplacements)));
-                var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_3__["RequestBase"](_this.getRestUrl(_this.urlReplacements), _this.restMethod, _this.serviceHolder);
+                var url = _this.getRestUrl(_this.urlReplacements);
+                url.queryParams = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, url.queryParams, _this.urlReplacements);
+                var request = new _services_rest_requests_request_base__WEBPACK_IMPORTED_MODULE_3__["RequestBase"](url, _this.restMethod, _this.serviceHolder);
                 request.lockScreen = _this._lockScreen;
                 request
                     .execute().subscribe(function (result) {
@@ -14623,6 +14621,7 @@ var Url = /** @class */ (function () {
         this.params[name] = value;
     };
     Url.prototype.addUrlParams = function (params) {
+        console.log(JSON.stringify(params));
         this.params = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.params, params);
     };
     Object.defineProperty(Url.prototype, "pathParts", {
