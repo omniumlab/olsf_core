@@ -5003,14 +5003,18 @@ var NotificationsComponent = /** @class */ (function () {
             }
             _this.notifications = notificationsData.notifications;
             _this.countChanged.emit(_this.notifications ? _this.notifications.length : 0);
-            if (_this.firstTime && _this.repiteTime !== 0) {
+            if (_this.firstTime && _this.repiteTime !== 0 && notificationsData.notifications.length > 0) {
                 _this.valueInterval = window.setInterval(function () {
-                    if (_this.notifications.length > 0) {
+                    if (_this.notifications.length > 0 || notificationsData.notifications.length > 0) {
                         new Audio('assets/notifications.mp3').play();
                     }
                 }, _this.repiteTime);
+                _this.firstTime = false;
             }
-            _this.firstTime = false;
+            if (_this.notifications.length === 0) {
+                window.clearInterval(_this.valueInterval);
+                _this.firstTime = true;
+            }
         });
     };
     NotificationsComponent.prototype.getTextColor = function (notification) {
