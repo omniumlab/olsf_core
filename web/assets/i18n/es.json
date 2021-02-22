@@ -1,7 +1,7 @@
 {
     "app.component.loading": "Cargando ...",
     "app.autocomplete": "Haz click para seleccionar ...",
-    "Login-header": "Iniciar sesión",
+    "Login-header": "Login",
     "table.component.dataTables_info": "Mostrando del {{value1}} al {{value2}} de {{value3}} registros",
     "table.component.updatelist": "Actualizar lista",
     "table.component.itemsPerPage.show": "Ver",
