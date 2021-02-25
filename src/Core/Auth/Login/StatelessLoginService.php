@@ -17,6 +17,7 @@ use Core\Auth\User\UserLoginProviderInterface;
 use Core\Exceptions\AuthenticationException;
 use Core\Exceptions\FailedLoginAttemptsExceededException;
 use Core\Exceptions\UserNotActiveException;
+use Core\Text\TextHandlerInterface;
 
 class StatelessLoginService implements LoginServiceInterface
 {
@@ -40,6 +41,10 @@ class StatelessLoginService implements LoginServiceInterface
      * @var FailedLoginAttemptsExceededException
      */
     private $failedLoginAttemptsExceededException;
+    /**
+     * @var TextHandlerInterface
+     */
+    private $textHandler;
 
 
     /**
@@ -48,12 +53,14 @@ class StatelessLoginService implements LoginServiceInterface
      * @param \Core\Auth\User\UserLoginProviderInterface $userProvider
      * @param \Core\Auth\Session\SessionServiceInterface $sessionService
      * @param \Core\Auth\Login\Config\LoginConfigInterface $loginConfig
+     * @param TextHandlerInterface $textHandler
      * @param \Core\Auth\Login\LoginAttempt\BadLoginAttemptInterface $badLoginAttempt
      * @param FailedLoginAttemptsExceededException $failedLoginAttemptsExceededException
      */
     public function __construct(UserLoginProviderInterface $userProvider,
                                 SessionServiceInterface $sessionService,
                                 LoginConfigInterface $loginConfig,
+                                TextHandlerInterface $textHandler,
                                 BadLoginAttemptInterface $badLoginAttempt,
                                 FailedLoginAttemptsExceededException $failedLoginAttemptsExceededException)
     {
@@ -62,6 +69,7 @@ class StatelessLoginService implements LoginServiceInterface
         $this->loginConfig = $loginConfig;
         $this->badLoginAttempt = $badLoginAttempt;
         $this->failedLoginAttemptsExceededException = $failedLoginAttemptsExceededException;
+        $this->textHandler = $textHandler;
     }
 
     /**
@@ -80,7 +88,7 @@ class StatelessLoginService implements LoginServiceInterface
         $user = $this->userProvider->getUserByLoginName($loginName);
 
         if ($user === null) {
-            throw new AuthenticationException();
+            throw new AuthenticationException($this->textHandler);
         }
 
         if (!$user->isActive())
@@ -94,7 +102,7 @@ class StatelessLoginService implements LoginServiceInterface
 
         if (!password_verify($password, $loginData->getPassword()) && $password !== $loginData->getPassword()) {
             $this->badLoginAttempt->addBadLoginAttempt($loginData, $user);
-            throw new AuthenticationException();
+            throw new AuthenticationException($this->textHandler);
         }
 
         return $this->sessionService->createSession($user, $expiration);

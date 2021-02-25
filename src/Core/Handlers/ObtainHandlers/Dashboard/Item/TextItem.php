@@ -15,6 +15,7 @@ class TextItem extends Item
      * TextItem constructor.
      * @param null|string $name
      */
+
     public function __construct($name = null)
     {
         parent::__construct($name);

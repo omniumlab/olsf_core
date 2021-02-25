@@ -27,7 +27,7 @@ abstract class Item implements ValueInterface
     {
         $this->variables = new BaseListValue();
 
-        if ($name !== null){
+        if ($name !== null) {
             $this->setName($name);
         }
     }
@@ -35,28 +35,46 @@ abstract class Item implements ValueInterface
     /**
      * @param $name string
      */
-    public function setName($name){
+    public function setName($name)
+    {
         $this->variables->setValue($name, "name");
     }
 
     /**
      * @param $itemType string
      */
-    public function setItemType($itemType){
+    public function setItemType($itemType)
+    {
         $this->variables->setValue($itemType, "itemType");
     }
 
     /**
      * @param $data array
      */
-    public function setData($data){
+    public function setData($data)
+    {
         $this->variables->setValue($data, "data");
+    }
+
+    /**
+     * @param $colors array
+     */
+    public function setColors($colors)
+    {
+        $this->variables->setValue($colors, "colors");
+    }   /**
+     * @param $colors array
+     */
+    public function setColorsPie($colors)
+    {
+        $this->variables->setValue($colors, "colorsPie");
     }
 
     /**
      * @param $data mixed
      */
-    public function addData($data){
+    public function addData($data)
+    {
         $this->variables->addItemToArray("data", $data);
     }
 
@@ -65,13 +83,13 @@ abstract class Item implements ValueInterface
         $this->variables->setValue($value, $variableName);
     }
 
-    public function addValueToVariableArray($arrayName, $value, $key = null){
+    public function addValueToVariableArray($arrayName, $value, $key = null)
+    {
         $this->variables->addItemToArray($arrayName, $value, $key);
     }
 
     /**
      * @return mixed
-
      */
     public function getValues()
     {

@@ -25,7 +25,7 @@ class ChartData implements ValueInterface
 
     /**
      * ChartData constructor.
-     * @param $data array
+     * @param $data
      * @param $label string
      * @param string|null $color
      */

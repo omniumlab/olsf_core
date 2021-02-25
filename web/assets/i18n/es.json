@@ -10,7 +10,7 @@
     "login.component.changPassword": "Cambiar contraseña",
     "login.component.send": "Enviar",
     "login.component.showLostPasswordForm": "¿Perdiste la contraseña?",
-    "login.component.remember_me": "Recuerdame",
+    "login.component.remember_me": "Recuérdame",
     "login.component.btnLog": "Loguearse",
     "image-creator.component.worklet-title": "Generador de imagenes",
     "image-creator.component.select_background": "Seleccionar fondo:",

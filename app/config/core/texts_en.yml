@@ -11,3 +11,4 @@ parameters:
   list_translation_filter_column_name: Name
   delete_text: Are you sure you want to delete this item?
   failed_login_attempts_exceeded_exception: You have entered the password incorrectly too many times. Try again in 30 minutes.
+  failed_login_password_incorrect_exception: Invalid credentials.
