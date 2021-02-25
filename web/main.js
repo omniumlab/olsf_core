@@ -4827,7 +4827,9 @@ var MenuItemComponent = /** @class */ (function () {
         return this.generalConfig.style === _model_remote_responses_structures_data_config_config_style__WEBPACK_IMPORTED_MODULE_6__["ConfigStyle"].NORMAL;
     };
     MenuItemComponent.prototype.toggleMenu = function () {
-        this.bodyClassesSetter.toggleMenu();
+        if (window.innerWidth <= 991) {
+            this.bodyClassesSetter.toggleMenu();
+        }
     };
     MenuItemComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
