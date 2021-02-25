@@ -36,7 +36,7 @@ abstract class AbstractStatelessLoginHandler extends AbstractLoginHandler
                                 FailedLoginAttemptsExceededException $failedLoginAttemptsExceededException)
     {
         parent::__construct(new StatelessLoginService($userProvider, new StatelessSessionService(), $loginConfig,
-            $badLoginAttempt, $failedLoginAttemptsExceededException), $textHandler, $anonymousRole);
+            $textHandler,$badLoginAttempt, $failedLoginAttemptsExceededException), $textHandler, $anonymousRole);
     }
 
 }
