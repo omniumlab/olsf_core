@@ -11,4 +11,4 @@ parameters:
   list_translation_filter_column_name: Nombre
   delete_text: ¿Estás seguro de eliminar este objeto?
   failed_login_attempts_exceeded_exception: Has introducido la contraseña incorrectamente demasiadas veces. Vuelve a intentarlo en 30 minutos.
-  failed_login_password_incorrect_exception: Credenciales invalidas.
+  failed_login_password_incorrect_exception: Email o contraseña incorrectos.
