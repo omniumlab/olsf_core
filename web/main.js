@@ -8469,10 +8469,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dialog_dialog_info_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../dialog/dialog-info.component */ "./src/app/components/dialog/dialog-info.component.ts");
 /* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var datatables_net_responsive__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! datatables.net-responsive */ "./node_modules/datatables.net-responsive/js/dataTables.responsive.js");
-/* harmony import */ var datatables_net_responsive__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(datatables_net_responsive__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
-
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/dialog */ "./node_modules/@angular/material/esm5/dialog.es5.js");
 
 
 
@@ -8514,13 +8511,6 @@ var TableComponent = /** @class */ (function (_super) {
         _this.urlReplacements = {};
         _this._currentPage = 1;
         _this.dtOptions = {
-            responsive: {
-                details: {
-                    renderer: datatables_net_responsive__WEBPACK_IMPORTED_MODULE_12___default.a.renderer.listHiddenNodes(),
-                    type: 'column',
-                    target: 0
-                }
-            },
             columnDefs: [{
                     className: 'control',
                     orderable: false,
@@ -8533,10 +8523,31 @@ var TableComponent = /** @class */ (function (_super) {
             destroy: true,
             ordering: false,
             info: false,
-            searching: false
+            searching: false,
         };
         _this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_11__["Subject"]();
         _this.dialog = dialog;
+        if (innerWidth < 991) {
+            _this.dtOptions.responsive = true;
+        }
+        else {
+            _this.dtOptions.responsive = false;
+        }
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_11__["fromEvent"])(window, 'resize')
+            .subscribe(function (event) {
+            if (innerWidth < 991) {
+                if (!_this.dtOptions.responsive) {
+                    _this.dtOptions.responsive = true;
+                    _this.reRender();
+                }
+            }
+            else {
+                if (_this.dtOptions.responsive) {
+                    _this.dtOptions.responsive = false;
+                    _this.reRender();
+                }
+            }
+        });
         return _this;
     }
     TableComponent.prototype.initializeEntity = function (entity) {
@@ -8651,34 +8662,16 @@ var TableComponent = /** @class */ (function (_super) {
         });
     };
     TableComponent.prototype.onPageUpdated = function () {
-        var _this = this;
         this.updateAllSelected();
+        this.reRender();
+    };
+    TableComponent.prototype.reRender = function () {
+        var _this = this;
         this.dtElement.dtInstance.then(function (dtInstance) {
             // Destroy the table first
             // Call the dtTrigger to rerender again
-            _this.dtOptions.responsive = false;
             dtInstance.destroy();
             _this.dtTrigger.next();
-            _this.dtOptions.responsive = true;
-        });
-    };
-    TableComponent.prototype.afterView = function () {
-        this.dtElement.dtInstance.then(function (dtInstance) {
-            // console.log(dtInstance);
-            // console.log(dtInstance.data());
-            dtInstance.columns().every(function () {
-                var that = this;
-                $('input', this.footer()).on('keyup change', function () {
-                    if (that.search() !== this['value']) {
-                        that.search(this['value'])
-                            .draw();
-                    }
-                });
-            });
-            // dtInstance.on('search.dt', function() {
-            //     // Do you stuff
-            //     console.log('search: ' + dtInstance.search());
-            // });
         });
     };
     Object.defineProperty(TableComponent.prototype, "allSelected", {
@@ -8865,7 +8858,7 @@ var TableComponent = /** @class */ (function (_super) {
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
         { type: _services_rest_rest_service__WEBPACK_IMPORTED_MODULE_8__["RestService"] },
-        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_13__["MatDialog"] },
+        { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_12__["MatDialog"] },
         { type: _services_body_attributes_setter_service__WEBPACK_IMPORTED_MODULE_7__["BodyAttributesSetter"] },
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] }
     ]; };
@@ -8884,7 +8877,7 @@ var TableComponent = /** @class */ (function (_super) {
             encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../../css/table/iCheck-flat-green.less */ "./src/app/css/table/iCheck-flat-green.less")).default, tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../../css/table/buttons.bootstrap.min.less */ "./src/app/css/table/buttons.bootstrap.min.less")).default, tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../../css/table/fixedHeader.bootstrap.min.less */ "./src/app/css/table/fixedHeader.bootstrap.min.less")).default, tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ../../css/table/scroller.bootstrap.min.less */ "./src/app/css/table/scroller.bootstrap.min.less")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _services_rest_rest_service__WEBPACK_IMPORTED_MODULE_8__["RestService"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_13__["MatDialog"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _services_rest_rest_service__WEBPACK_IMPORTED_MODULE_8__["RestService"], _angular_material_dialog__WEBPACK_IMPORTED_MODULE_12__["MatDialog"],
             _services_body_attributes_setter_service__WEBPACK_IMPORTED_MODULE_7__["BodyAttributesSetter"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"]])
     ], TableComponent);
     return TableComponent;
