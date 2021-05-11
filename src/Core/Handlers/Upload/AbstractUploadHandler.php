@@ -40,7 +40,7 @@ abstract class AbstractUploadHandler extends Handler
      */
     public function handle($command): HandlerResponseInterface
     {
-        $id = $command->get("id", null, true);
+        $id = $command->get("id", null, false);
         $this->fileRepository->uploadResourceByCommand($command, $this->getFolderName(), $id);
         return new SuccessHandlerResponse(HttpCodes::CODE_OK, [], $this->getTextHandler()->get("upload_success_response"));
     }
