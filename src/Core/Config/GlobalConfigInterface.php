@@ -55,13 +55,13 @@ interface GlobalConfigInterface
 
     public function getPaypalToken(): string;
 
-    public function getBBVA_Ds_Merchant_MerchantSignature(): string;
+    public function getRedsys_Ds_Merchant_MerchantSignature(): string;
 
-    public function getBBVA_ds_merchantcode(): string;
+    public function getRedsys_ds_merchantcode(): string;
 
-    public function getBBVA_ds_merchant_terminal(): string;
+    public function getRedsys_ds_merchant_terminal(): string;
 
-    public function getBBVAPaymentUrl(string $env): string;
+    public function getRedsysPaymentUrl(string $env): string;
     public function getDefaultLang(): string ;
 
     public function getTranslatePath(): string ;

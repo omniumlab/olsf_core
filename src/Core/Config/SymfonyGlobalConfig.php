@@ -171,17 +171,17 @@ class SymfonyGlobalConfig implements GlobalConfigInterface, ReflectionConfigInte
 
     }
 
-    public function getBBVA_Ds_Merchant_MerchantSignature(): string
+    public function getRedsys_Ds_Merchant_MerchantSignature(): string
     {
         return $this->container->getParameter("Ds_Merchant_MerchantSignature");
     }
 
-    public function getBBVA_ds_merchantcode(): string
+    public function getRedsys_ds_merchantcode(): string
     {
         return $this->container->getParameter("DS_MERCHANT_MERCHANTCODE");
     }
 
-    public function getBBVA_ds_merchant_terminal(): string
+    public function getRedsys_ds_merchant_terminal(): string
     {
         return $this->container->getParameter("DS_MERCHANT_TERMINAL");
     }
@@ -203,9 +203,9 @@ class SymfonyGlobalConfig implements GlobalConfigInterface, ReflectionConfigInte
         return $this->container->getParameter("database_name");
 
     }
-    public function getBBVAPaymentUrl(string $env): string
+    public function getRedsysPaymentUrl(string $env): string
     {
-        return $this->container->getParameter("BBVA_PAYMENT_URL" . strtoupper($env));
+        return $this->container->getParameter("REDSYS_PAYMENT_URL" . strtoupper($env));
     }
 
     public function getHttp(): string

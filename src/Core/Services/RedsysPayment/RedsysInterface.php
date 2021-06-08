@@ -6,14 +6,14 @@
  * Time: 12:04
  */
 
-namespace Core\Services\BBVAPayment;
+namespace Core\Services\RedsysPayment;
 
 
-interface BBVAInterface
+interface RedsysInterface
 {
     function createOrder(float $amount, int $orderCode, string $orderDescription,
                          string $apiUrlOk, ?string $apiUrlOkPostParams = null,
-                         ?string $clientUrlOk = null, ?string $clientUrlKo = null): array;
+                         ?string $clientUrlOk = null, ?string $clientUrlKo = null,int $authorization=RedsysPaymentMethod::PREAUTORIZACION): array;
 
     function checkOrder($version, $params, $signature): bool;
     function checkSignature($version, $params, $signature): bool;

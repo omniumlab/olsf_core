@@ -20,7 +20,7 @@
 * 
 * Redsys Servicios de Procesamiento, S.L., CIF B85955367
 */
-namespace Core\Services\BBVAPayment;
+namespace Core\Services\RedsysPayment;
 
 class RedsysAPI{
 

@@ -6,13 +6,21 @@
  * Time: 9:43
  */
 
-namespace Core\Services\BBVAPayment;
+namespace Core\Services\RedsysPayment;
 
 use Core\Config\GlobalConfigInterface;
 
 
-class BBVAPaymentMethod implements BBVAInterface
+class RedsysPaymentMethod implements RedsysInterface
 {
+    //https://pagosonline.redsys.es/tipos-operacion.html
+    const PAGO_NORMAL = 0;
+    const PREAUTORIZACION = 1;
+    const CONFIRMACION = 2;
+    const DEVOLUCION = 3;
+    const PREAUTORIZACION_SEPARADA = 7;
+    const CONFIRMACION_SEPARADA = 8;
+    const ANULACION = 9;
     /** @var string */
     private $Ds_Merchant_MerchantSignature;
     /** @var string */
@@ -25,28 +33,28 @@ class BBVAPaymentMethod implements BBVAInterface
 
     public function __construct(GlobalConfigInterface $config)
     {
-        $this->Ds_Merchant_MerchantSignature = $config->getBBVA_Ds_Merchant_MerchantSignature();
-        $this->DS_MERCHANT_MERCHANTCODE = $config->getBBVA_ds_merchantcode();
-        $this->DS_MERCHANT_TERMINAL = $config->getBBVA_ds_merchant_terminal();
-        $this->action = $config->getBBVAPaymentUrl(isset($_SERVER["OLSF_ENVIROMENT"]) ? $_SERVER["OLSF_ENVIROMENT"] : "prod");
+        $this->Ds_Merchant_MerchantSignature = $config->getRedsys_Ds_Merchant_MerchantSignature();
+        $this->DS_MERCHANT_MERCHANTCODE = $config->getRedsys_ds_merchantcode();
+        $this->DS_MERCHANT_TERMINAL = $config->getRedsys_ds_merchant_terminal();
+        $this->action = $config->getRedsysPaymentUrl(isset($_SERVER["OLSF_ENVIROMENT"]) ? $_SERVER["OLSF_ENVIROMENT"] : "prod");
     }
 
     function createOrder(float $amount, int $orderCode, string $description, string $apiUrlOk,
-                         ?string $apiUrlOkPostParams = null, ?string $clientUrlOk = null, ?string $clientUrlKo = null): array
+                         ?string $apiUrlOkPostParams = null, ?string $clientUrlOk = null, ?string $clientUrlKo = null,int $authorization=RedsysPaymentMethod::PREAUTORIZACION): array
     {
         $redsyapi = new RedsysAPI();
         $redsyapi->setParameter("DS_MERCHANT_AMOUNT", $amount);
-        $redsyapi->setParameter("DS_MERCHANT_MERCHANTCODE", $this->DS_MERCHANT_MERCHANTCODE);
         $redsyapi->setParameter("DS_MERCHANT_ORDER", $this->generateCode($orderCode));
+        $redsyapi->setParameter("DS_MERCHANT_MERCHANTCODE", $this->DS_MERCHANT_MERCHANTCODE);
+        $redsyapi->setParameter("DS_MERCHANT_CURRENCY", 978);        //978 €, 840  $
+        $redsyapi->setParameter("DS_MERCHANT_TRANSACTIONTYPE", $authorization);
+        $redsyapi->setParameter("DS_MERCHANT_TERMINAL", $this->DS_MERCHANT_TERMINAL);
+        $redsyapi->setParameter("DS_MERCHANT_MERCHANTURL", $apiUrlOk);
         $redsyapi->setParameter("Ds_Merchant_MerchantData", $apiUrlOkPostParams);
-        $redsyapi->setParameter("Ds_Merchant_Identifier", "REQUIRED");
+
         $redsyapi->setParameter("Ds_Merchant_UrlOK", $clientUrlOk);
         $redsyapi->setParameter("Ds_Merchant_UrlKO", $clientUrlKo);
-        $redsyapi->setParameter("DS_MERCHANT_MERCHANTURL", $apiUrlOk);
-        $redsyapi->setParameter("DS_MERCHANT_CURRENCY", 978);        //978 €, 840  $
-        $redsyapi->setParameter("DS_MERCHANT_TRANSACTIONTYPE", 7);
         $redsyapi->setParameter("DS_MERCHANT_PRODUCTDESCRIPTION", $description);
-        $redsyapi->setParameter("DS_MERCHANT_TERMINAL", $this->DS_MERCHANT_TERMINAL);
         $Ds_MerchantParameters = $redsyapi->createMerchantParameters();
         $Ds_Signature = $redsyapi->createMerchantSignature($this->Ds_Merchant_MerchantSignature);
         return [

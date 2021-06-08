@@ -130,8 +130,8 @@ services:
     Core\Services\PaypalPayment\PaypalInterface:
       class: Core\Services\PaypalPayment\PaypalPaymentMethod
 
-    Core\Services\BBVAPayment\BBVAInterface:
-      class: Core\Services\BBVAPayment\BBVAPaymentMethod
+    Core\Services\RedsysPayment\RedsysInterface:
+      class: Core\Services\RedsysPayment\RedsysPaymentMethod
 
     Core\Repository\File\FileRepositoryInterface:
       class: Core\Repository\File\FileRepository
