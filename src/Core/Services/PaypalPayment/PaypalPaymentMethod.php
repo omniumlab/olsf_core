@@ -42,13 +42,13 @@ class PaypalPaymentMethod implements PaypalInterface
      * @param $currency
      * @return string
      */
-    public function createOrder($amount, $currency): string
+    public function createOrder($amount, $currency): array
     {
         $request = new OrdersCreateRequest();
         $request->prefer('return=representation');
         $request->body = self::buildRequestBody($amount, $currency);
         $response = $this->client->execute($request);
-        return $response->result->id;
+        return $response->result;
     }
 
     private function buildRequestBody($amount, $currency)

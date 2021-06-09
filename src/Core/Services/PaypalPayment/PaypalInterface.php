@@ -11,7 +11,7 @@ namespace Core\Services\PaypalPayment;
 
 interface PaypalInterface
 {
-    public function createOrder($amount,$currency): string;
+    public function createOrder($amount,$currency): array ;
 
     public function getPaymentId($orderId): string;
     public function refundOrder($PaymentId): string;
