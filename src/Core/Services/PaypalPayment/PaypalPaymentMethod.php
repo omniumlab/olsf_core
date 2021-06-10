@@ -13,6 +13,7 @@ use Core\Config\GlobalConfigInterface;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use PayPalCheckoutSdk\Payments\AuthorizationsCaptureRequest;
@@ -29,7 +30,7 @@ class PaypalPaymentMethod implements PaypalInterface
     public function __construct(GlobalConfigInterface $config)
     {
         $enviroment = isset($_SERVER["OLSF_ENVIROMENT"]) ? $_SERVER["OLSF_ENVIROMENT"] : "prod";
-        $this->client = new PayPalHttpClient($enviroment=="prod"?new ProductionEnvironment($config->getPaypalClientID(), $config->getPaypalClientSecret()):
+        $this->client = new PayPalHttpClient($enviroment == "prod" ? new ProductionEnvironment($config->getPaypalClientID(), $config->getPaypalClientSecret()) :
             new SandboxEnvironment($config->getPaypalClientID(), $config->getPaypalClientSecret()));
         $this->accessToken = $config->getPaypalToken();
         $this->paypalApi = $config->getPaypalApi();
@@ -40,9 +41,9 @@ class PaypalPaymentMethod implements PaypalInterface
     /**
      * @param $amount
      * @param $currency
-     * @return string
+     * @return object
      */
-    public function createOrder($amount, $currency): array
+    public function createOrder($amount, $currency): object
     {
         $request = new OrdersCreateRequest();
         $request->prefer('return=representation');
@@ -55,6 +56,11 @@ class PaypalPaymentMethod implements PaypalInterface
     {
         return array(
             'intent' => 'CAPTURE',
+            'application_context' =>
+                array(
+                    'return_url' => 'https://www.aagit.org',
+                    'cancel_url' => 'https://www.aagit.org'
+                ),
             'purchase_units' =>
                 array(
                     0 =>
@@ -81,6 +87,18 @@ class PaypalPaymentMethod implements PaypalInterface
     {
         $response = $this->client->execute(new CapturesRefundRequest($PaymentId));
         return $response->result->status;
+
+    }
+
+    public function checkIfPaymentValid($orderId): bool
+    {
+        try {
+            $response = $this->client->execute(new OrdersCaptureRequest($orderId));
+
+        } catch (\Exception $e) {
+            return false;
+        }
+            return $response->result->status = "COMPLETED" ? true : false;
 
     }
 }
